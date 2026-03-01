@@ -2,8 +2,11 @@
 resolver = "2"
 members = ["profila_mpc"]
 
-[workspace.metadata]
+[workspace.metadata.partisiablockchain]
 cargo-partisia = "5.513.0"
 
 [workspace.metadata.zkcompiler]
 url = "https://gitlab.com/api/v4/groups/12499775/-/packages/maven/com/partisiablockchain/language/zkcompiler/6.35.0/zkcompiler-6.35.0-jar-with-dependencies.jar"
+
+[workspace.metadata.abi-cli]
+url = "https://gitlab.com/api/v4/groups/12499775/-/packages/maven/com/partisiablockchain/language/abi-cli/6.93.0/abi-cli-6.93.0-jar-with-dependencies.jar"

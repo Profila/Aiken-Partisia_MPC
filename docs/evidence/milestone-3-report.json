@@ -1,0 +1,96 @@
+{
+  "milestone": "M3 — Secret Input Flow & Privacy Verification",
+  "project": "Project Catalyst #1200045 — MPC as a Layer 2 Service to Cardano",
+  "date": "2026-03-02",
+  "status": "Complete",
+
+  "pbc_contract": {
+    "address": "0395e78580157893cde88165d1340e0b9992c31417",
+    "deployment_tx": "8e8ea840a7bb7c7a98c0df0a95e78580157893cde88165d1340e0b9992c31417",
+    "deployed_at": "2026-03-02T00:39:04Z",
+    "deployer": "003942bda1d9f23da4bcfeb0b230f7c261d0605712",
+    "browser_url": "https://browser.testnet.partisiablockchain.com/contracts/0395e78580157893cde88165d1340e0b9992c31417",
+    "sdk_version": "v.16.126.0",
+    "binder_version": "11.9.0",
+    "gas_balance": 332837,
+    "expiration": "2030-03-07",
+    "init_params": {
+      "dataset_id": "profila_test_v1",
+      "dataset_id_hex": "70726f66696c615f746573745f7631",
+      "query_type": "age_threshold",
+      "min_participants": 3
+    }
+  },
+
+  "synthetic_dataset": {
+    "file": "test-data/profila_test_users.json",
+    "total_users": 50,
+    "expected_age_threshold_gt_18": 35,
+    "expected_survey_match_true": 28
+  },
+
+  "secret_submissions": {
+    "script": "relay/submit_secrets.ts",
+    "secrets_submitted": 20,
+    "log_file": "relay/secret-submissions-log.json",
+    "raw_values_logged": false,
+    "note": "Submission log contains ONLY user_id_hash, pbc_tx_id, query_type, timestamp. Zero raw ages or survey answers."
+  },
+
+  "privacy_verification": {
+    "contract_state_tab": {
+      "individual_data_visible": false,
+      "fields_shown": ["administrator", "dataset_id", "query_type", "min_participants", "result (None)", "computation_complete (false)"]
+    },
+    "secret_data_tab": {
+      "individual_data_visible": false,
+      "content": "Computation status: Waiting. No ZK variables yet."
+    },
+    "submission_log": {
+      "individual_data_visible": false,
+      "fields_per_entry": ["user_id_hash", "pbc_tx_id", "query_type", "submitted_at"]
+    },
+    "relay_output": {
+      "individual_data_visible": false,
+      "shows": "Truncated hashes only"
+    }
+  },
+
+  "unit_tests": {
+    "total": 9,
+    "passed": 9,
+    "failed": 0,
+    "test_names": [
+      "test_init_contract_valid_query_types",
+      "test_init_contract_rejects_invalid_query_types",
+      "test_init_contract_min_participants_validation",
+      "test_compute_age_threshold_result",
+      "test_compute_survey_match_result",
+      "test_decode_zero_result",
+      "test_decode_large_result",
+      "test_decode_short_byte_slice",
+      "test_decode_empty_slice"
+    ]
+  },
+
+  "artifacts": [
+    "partisia/deploy/deploy-m3.json",
+    "partisia/deploy/profila_mpc.pbc",
+    "partisia/deploy/profila_mpc.abi",
+    "partisia/deploy/profila_mpc.zkwa",
+    "relay/secret-submissions-log.json",
+    "relay/m3-state-evidence.json",
+    "test-data/profila_test_users.json"
+  ],
+
+  "checklist": {
+    "pbc_zk_contract_deployed": true,
+    "contract_state_initialized": true,
+    "secrets_submitted": true,
+    "no_individual_values_in_log": true,
+    "no_individual_values_in_state": true,
+    "no_individual_values_in_secret_tab": true,
+    "all_unit_tests_pass": true,
+    "evidence_files_generated": true
+  }
+}

@@ -23,6 +23,7 @@ abi = [
     "pbc_traits/abi",
     "create_type_spec_derive/abi",
     "pbc_lib/abi",
+    "pbc_zk/abi",
 ]
 
 [lib]
