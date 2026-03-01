@@ -19,6 +19,12 @@ cardano/scripts/node_modules/
 partisia/contracts/target/
 partisia/contracts/profila_mpc/target/
 
+# PBC keys (NEVER commit private keys)
+partisia/keys/
+
+# PBC deploy outputs
+partisia/deploy/deploy-m2.json
+
 # PBC ZK compiler cache
 partisia/contracts/target/zkcompiler-*.jar
 
