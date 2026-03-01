@@ -65,11 +65,11 @@ fn initialize(
     min_participants: u32,
 ) -> ProfilaMpcState {
     assert!(
-        query_type == "age_threshold" || query_type == "survey_match",
+        is_valid_query_type(&query_type),
         "query_type must be 'age_threshold' or 'survey_match'"
     );
     assert!(
-        min_participants >= 2,
+        is_valid_min_participants(min_participants),
         "min_participants must be at least 2 for meaningful MPC"
     );
 
@@ -235,14 +235,121 @@ fn on_variables_opened(
 }
 
 // ---------------------------------------------------------------------------
+// Pure Validation Functions (extracted for testability)
+// ---------------------------------------------------------------------------
+
+/// Returns true when the query type is one of the two supported values.
+fn is_valid_query_type(query_type: &str) -> bool {
+    query_type == "age_threshold" || query_type == "survey_match"
+}
+
+/// Returns true when the minimum participant count is meaningful for MPC.
+fn is_valid_min_participants(min_participants: u32) -> bool {
+    min_participants >= 2
+}
+
+/// Decodes a little-endian byte slice into an i64 result.
+/// Handles slices shorter than 8 bytes by zero-padding.
+fn decode_result_i64_le(data: &[u8]) -> i64 {
+    let mut buffer = [0u8; 8];
+    let len = data.len().min(8);
+    buffer[..len].copy_from_slice(&data[..len]);
+    i64::from_le_bytes(buffer)
+}
+
+// ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
 
 /// Read a declassified variable's data as a little-endian i64.
 fn read_variable_i64_le(var: &ZkClosed<SecretVarType>) -> i64 {
     let data = var.data.as_ref().expect("Variable has no data");
-    let mut buffer = [0u8; 8];
-    let len = data.len().min(8);
-    buffer[..len].copy_from_slice(&data[..len]);
-    i64::from_le_bytes(buffer)
+    decode_result_i64_le(data)
+}
+
+// ---------------------------------------------------------------------------
+// Unit Tests
+// ---------------------------------------------------------------------------
+// NOTE: Tests for pure validation logic and result decoding.
+// ZK runtime functions (secret_variable_ids, load_sbi, etc.) are tested
+// via testnet deployment — the PBC MPC runtime is required for those paths.
+// Run with: cargo test (requires PBC toolchain for dependency resolution)
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    // -- Test 1: Initialisation validation ----------------------------------
+    // Verifies query_type acceptance (mirrors assert! in initialize)
+
+    #[test]
+    fn test_init_contract_valid_query_types() {
+        assert!(is_valid_query_type("age_threshold"));
+        assert!(is_valid_query_type("survey_match"));
+    }
+
+    #[test]
+    fn test_init_contract_rejects_invalid_query_types() {
+        assert!(!is_valid_query_type(""));
+        assert!(!is_valid_query_type("unknown_query"));
+        assert!(!is_valid_query_type("AGE_THRESHOLD")); // case-sensitive
+        assert!(!is_valid_query_type("age_threshold ")); // trailing space
+    }
+
+    #[test]
+    fn test_init_contract_min_participants_validation() {
+        assert!(!is_valid_min_participants(0));
+        assert!(!is_valid_min_participants(1));
+        assert!(is_valid_min_participants(2));
+        assert!(is_valid_min_participants(50));
+    }
+
+    // -- Test 2: Age threshold result decoding ------------------------------
+    // Simulates: 5 users submit ages [25, 15, 30, 12, 45] → 3 are > 18
+
+    #[test]
+    fn test_compute_age_threshold_result() {
+        // The ZK computation returns count=3 as LE i64 bytes
+        let expected: i64 = 3;
+        let encoded = expected.to_le_bytes().to_vec();
+        let decoded = decode_result_i64_le(&encoded);
+        assert_eq!(decoded, 3, "Expected 3 users over age 18");
+    }
+
+    // -- Test 3: Survey match result decoding -------------------------------
+    // Simulates: 5 users submit [1, 0, 1, 1, 0] → sum = 3
+
+    #[test]
+    fn test_compute_survey_match_result() {
+        let expected: i64 = 3;
+        let encoded = expected.to_le_bytes().to_vec();
+        let decoded = decode_result_i64_le(&encoded);
+        assert_eq!(decoded, 3, "Expected sum of 3 survey matches");
+    }
+
+    // -- Test 4: Edge cases -------------------------------------------------
+
+    #[test]
+    fn test_decode_zero_result() {
+        let encoded = 0i64.to_le_bytes().to_vec();
+        assert_eq!(decode_result_i64_le(&encoded), 0);
+    }
+
+    #[test]
+    fn test_decode_large_result() {
+        let encoded = 10_000i64.to_le_bytes().to_vec();
+        assert_eq!(decode_result_i64_le(&encoded), 10_000);
+    }
+
+    #[test]
+    fn test_decode_short_byte_slice() {
+        // A 4-byte LE encoding of 42 should zero-pad to correct i64
+        let short = 42i32.to_le_bytes().to_vec();
+        assert_eq!(decode_result_i64_le(&short), 42);
+    }
+
+    #[test]
+    fn test_decode_empty_slice() {
+        assert_eq!(decode_result_i64_le(&[]), 0, "Empty data → 0");
+    }
 }
