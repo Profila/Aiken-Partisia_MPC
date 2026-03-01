@@ -1,0 +1,27 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+.env.local
+
+# Aiken build artifacts
+cardano/build/
+cardano/plutus.json
+
+# Rust build artifacts
+partisia/contracts/profila_mpc/target/
+
+# Node.js
+node_modules/
+relay/node_modules/
+
+# Relay runtime artifacts (regenerated on each run)
+relay/processed.json
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo

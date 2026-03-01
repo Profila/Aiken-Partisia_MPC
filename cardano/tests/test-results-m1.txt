@@ -1,0 +1,94 @@
+{
+  "seed": 3856618996,
+  "summary": {
+    "total": 6,
+    "passed": 6,
+    "failed": 0,
+    "kind": {
+      "unit": 6,
+      "property": 0
+    }
+  },
+  "modules": [
+    {
+      "name": "profila_mpc_tests",
+      "summary": {
+        "total": 6,
+        "passed": 6,
+        "failed": 0,
+        "kind": {
+          "unit": 6,
+          "property": 0
+        }
+      },
+      "tests": [
+        {
+          "title": "test_initiate_mpc_valid",
+          "status": "pass",
+          "on_failure": "fail_immediately",
+          "execution_units": {
+            "mem": 37784,
+            "cpu": 12233900
+          }
+        },
+        {
+          "title": "test_initiate_mpc_empty_dataset",
+          "status": "pass",
+          "on_failure": "succeed_eventually",
+          "execution_units": {
+            "mem": 32854,
+            "cpu": 10561421
+          },
+          "traces": [
+            "dataset_not_empty ? False"
+          ]
+        },
+        {
+          "title": "test_initiate_mpc_wrong_signer",
+          "status": "pass",
+          "on_failure": "succeed_eventually",
+          "execution_units": {
+            "mem": 33578,
+            "cpu": 10818873
+          },
+          "traces": [
+            "initiator_signed ? False"
+          ]
+        },
+        {
+          "title": "test_initiate_mpc_bad_query",
+          "status": "pass",
+          "on_failure": "succeed_eventually",
+          "execution_units": {
+            "mem": 39875,
+            "cpu": 12829921
+          },
+          "traces": [
+            "valid_query_type ? False"
+          ]
+        },
+        {
+          "title": "test_initiate_mpc_bad_timestamp",
+          "status": "pass",
+          "on_failure": "succeed_eventually",
+          "execution_units": {
+            "mem": 43796,
+            "cpu": 14301528
+          },
+          "traces": [
+            "timestamp_positive ? False"
+          ]
+        },
+        {
+          "title": "test_valid_query_types",
+          "status": "pass",
+          "on_failure": "fail_immediately",
+          "execution_units": {
+            "mem": 7811,
+            "cpu": 1826212
+          }
+        }
+      ]
+    }
+  ]
+}

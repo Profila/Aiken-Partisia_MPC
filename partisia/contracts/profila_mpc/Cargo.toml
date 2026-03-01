@@ -1,0 +1,16 @@
+[package]
+name = "profila-mpc"
+version = "0.1.0"
+edition = "2021"
+
+[package.metadata.zk]
+zk-compute-path = "src/zk_compute.rs"
+
+[dependencies]
+pbc_contract_common = { version = "0.12" }
+pbc_contract_codegen = { version = "0.12" }
+pbc_zk = { version = "0.12" }
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+path = "src/contract.rs"

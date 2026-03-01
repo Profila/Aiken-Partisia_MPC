@@ -1,0 +1,368 @@
+{
+  "metadata": {
+    "dataset_id": "profila_test_v1",
+    "record_count": 50,
+    "mpc_secret_fields": [
+      "age",
+      "survey_q1_answer"
+    ],
+    "created": "2026-03-01T20:40:35.196Z",
+    "note": "Synthetic data only — generated for MPC demonstration. No real PII.",
+    "expected_results": {
+      "age_threshold_gt_18": 35,
+      "survey_match_true": 28
+    }
+  },
+  "users": [
+    {
+      "user_id_hash": "3506ea43d9207038eea58caca84d51e4ccc01c496b6572bbf4dfda7fa03085b8",
+      "age": 19,
+      "survey_q1_answer": true,
+      "country_code": "CH",
+      "profila_consent": true
+    },
+    {
+      "user_id_hash": "9cd3af488c3a50384d462b202e21adbbcafa8bd72000504f99aa0939fcf003fc",
+      "age": 22,
+      "survey_q1_answer": true,
+      "country_code": "DE",
+      "profila_consent": true
+    },
+    {
+      "user_id_hash": "7672ebab652419f4dbc214d3a5d490db3b8896330514d1d53a6e55bf1e685d79",
+      "age": 25,
+      "survey_q1_answer": true,
+      "country_code": "GB",
+      "profila_consent": true
+    },
+    {
+      "user_id_hash": "05f21f3c8ca246ad6bcb0d315a557c85e703abde266f2312dabcd88115837aa8",
+      "age": 28,
+      "survey_q1_answer": true,
+      "country_code": "US",
+      "profila_consent": true
+    },
+    {
+      "user_id_hash": "a93b16330ecbdfa3c0973146cd3b7796b33b855871eb02f91078bc926ae4fec9",
+      "age": 30,
+      "survey_q1_answer": true,
+      "country_code": "FR",
+      "profila_consent": true
+    },
+    {
+      "user_id_hash": "2df1333382e7daf19aef5777f49064b9edfa00b8f807bc14fcd6077a6086c752",
+      "age": 32,
+      "survey_q1_answer": true,
+      "country_code": "AU",
+      "profila_consent": true
+    },
+    {
+      "user_id_hash": "aea675217f5064635c3218ae302269d1b91b0871c163332c6e30a62e8ca8ce3b",
+      "age": 34,
+      "survey_q1_answer": true,
+      "country_code": "CH",
+      "profila_consent": true
+    },
+    {
+      "user_id_hash": "267f635b3b18e1edaa07cba3e002acd466d6a5ae4a590c3266200a730c5957dc",
+      "age": 37,
+      "survey_q1_answer": true,
+      "country_code": "DE",
+      "profila_consent": true
+    },
+    {
+      "user_id_hash": "7bd120351302f08013f4b43481b057ec3e4db37f8d2edfaa469320bd484121b2",
+      "age": 40,
+      "survey_q1_answer": true,
+      "country_code": "GB",
+      "profila_consent": true
+    },
+    {
+      "user_id_hash": "d82d744a34be1f205bd52b88df5b620f408724218582d30affe28e563967545a",
+      "age": 43,
+      "survey_q1_answer": true,
+      "country_code": "US",
+      "profila_consent": true
+    },
+    {
+      "user_id_hash": "8a0864f6d2920c5ade1c878dc1a67b1c0d575639ecddd4bf8895ac1f867faa77",
+      "age": 45,
+      "survey_q1_answer": true,
+      "country_code": "FR",
+      "profila_consent": true
+    },
+    {
+      "user_id_hash": "2e3cf06436f0e3d6e1241bfb1b9824758fb54874f99c9058f1f292e4c00478f0",
+      "age": 48,
+      "survey_q1_answer": true,
+      "country_code": "AU",
+      "profila_consent": true
+    },
+    {
+      "user_id_hash": "d869110ff46a3e912c93a5bd05309b7a204caf0f1d8bbea6ac41955edb3b2b8c",
+      "age": 50,
+      "survey_q1_answer": true,
+      "country_code": "CH",
+      "profila_consent": true
+    },
+    {
+      "user_id_hash": "f8901a25cb4b91e87b3346eb426f99024ec098561e0ae70af587c4100ff95f3d",
+      "age": 55,
+      "survey_q1_answer": true,
+      "country_code": "DE",
+      "profila_consent": true
+    },
+    {
+      "user_id_hash": "955ff2b7e00b7f9e110f377f3e1b324b2d2a91a1f8d081a1f49f5423bd2f53d5",
+      "age": 60,
+      "survey_q1_answer": true,
+      "country_code": "GB",
+      "profila_consent": true
+    },
+    {
+      "user_id_hash": "66136b4aa90697e7d12eb7d22796d2a959d50cc6ddc22ce13440295a45725634",
+      "age": 65,
+      "survey_q1_answer": true,
+      "country_code": "US",
+      "profila_consent": true
+    },
+    {
+      "user_id_hash": "85e3b42d40d280606d285441938c23eda5adbd6d4265523b54aaed9a758a871f",
+      "age": 70,
+      "survey_q1_answer": true,
+      "country_code": "FR",
+      "profila_consent": true
+    },
+    {
+      "user_id_hash": "b474a9d853c8603f3b16488ed2356dba4347c4920f4b2a445b209ba6d88d7772",
+      "age": 75,
+      "survey_q1_answer": true,
+      "country_code": "AU",
+      "profila_consent": true
+    },
+    {
+      "user_id_hash": "86b56cdd9e68d5ea95e2461682c6088a0ebe92f89d175c244ade0903fd4e2871",
+      "age": 19,
+      "survey_q1_answer": true,
+      "country_code": "CH",
+      "profila_consent": true
+    },
+    {
+      "user_id_hash": "ddc1bd21eb3c1bd584f07c503c861a6e4c29ae0b3125602240ca6537bcc249b4",
+      "age": 22,
+      "survey_q1_answer": true,
+      "country_code": "DE",
+      "profila_consent": true
+    },
+    {
+      "user_id_hash": "8d0690ba2c0859617b625d930a431882eeac902c5af57ea35907f9dc46e39856",
+      "age": 25,
+      "survey_q1_answer": true,
+      "country_code": "GB",
+      "profila_consent": true
+    },
+    {
+      "user_id_hash": "be27c53d1477923217ef072d25e63a015f1054d7e3217a215f6263d41d7ef0df",
+      "age": 28,
+      "survey_q1_answer": true,
+      "country_code": "US",
+      "profila_consent": true
+    },
+    {
+      "user_id_hash": "d4dcd466000260be4f673f0af575651dca7ad4a2cce6b8a5e2a6ab759a4bd4d0",
+      "age": 30,
+      "survey_q1_answer": true,
+      "country_code": "FR",
+      "profila_consent": true
+    },
+    {
+      "user_id_hash": "9fa64a42be23e3157261b273460da67645596c20cf0aef964cb31e279abe3244",
+      "age": 32,
+      "survey_q1_answer": true,
+      "country_code": "AU",
+      "profila_consent": true
+    },
+    {
+      "user_id_hash": "604ec085b573bce8bece94e436e049d2469d3e7faf136e4cd2e670806f0abaff",
+      "age": 34,
+      "survey_q1_answer": true,
+      "country_code": "CH",
+      "profila_consent": true
+    },
+    {
+      "user_id_hash": "0be91b8937ba8a525c76da30d81228b7b5e62b0ed2123e1499efaa61bedb3b1c",
+      "age": 37,
+      "survey_q1_answer": true,
+      "country_code": "DE",
+      "profila_consent": true
+    },
+    {
+      "user_id_hash": "78364c51c9fec8354cc79e7f47c891bcc89966dd3587e0704c945382424a54bc",
+      "age": 40,
+      "survey_q1_answer": true,
+      "country_code": "GB",
+      "profila_consent": true
+    },
+    {
+      "user_id_hash": "a1e2ef21fc381ccf55628fb47cefc9a4244f9f4f29849ab21aeb7561119129ff",
+      "age": 43,
+      "survey_q1_answer": true,
+      "country_code": "US",
+      "profila_consent": true
+    },
+    {
+      "user_id_hash": "1f5a9542261e89cec7e6b74579f237b2b7513d287bb7f8f6bcbe626a24440b3f",
+      "age": 45,
+      "survey_q1_answer": false,
+      "country_code": "FR",
+      "profila_consent": true
+    },
+    {
+      "user_id_hash": "535ade87a7c021e47fb7a0683f85cec511a602abbd8b3b1566f0d9203e95df97",
+      "age": 48,
+      "survey_q1_answer": false,
+      "country_code": "AU",
+      "profila_consent": true
+    },
+    {
+      "user_id_hash": "41ec6f88287a247cdc9a096b749c7ace5b9bb424cb85b84bcdcd9da7758b9557",
+      "age": 50,
+      "survey_q1_answer": false,
+      "country_code": "CH",
+      "profila_consent": true
+    },
+    {
+      "user_id_hash": "711b7adfaf4e1574f419b8f58749fa78f3d99e9615f0333a9f703c870339785e",
+      "age": 55,
+      "survey_q1_answer": false,
+      "country_code": "DE",
+      "profila_consent": true
+    },
+    {
+      "user_id_hash": "0ccbf727432d406a071a6c7bd05b6b147cea5d0e2404542424bdd2e3c5cf6bfa",
+      "age": 60,
+      "survey_q1_answer": false,
+      "country_code": "GB",
+      "profila_consent": true
+    },
+    {
+      "user_id_hash": "ac63d1142e2142b496da7689e6cbf066b01e4e10dfcc7a8cd27f5c5c16a57629",
+      "age": 65,
+      "survey_q1_answer": false,
+      "country_code": "US",
+      "profila_consent": true
+    },
+    {
+      "user_id_hash": "528e6b1c7472813abc24973234df021f8b17bb07252423abe26cc48ea4fe2151",
+      "age": 70,
+      "survey_q1_answer": false,
+      "country_code": "FR",
+      "profila_consent": true
+    },
+    {
+      "user_id_hash": "1cd305fa6233af0cda3b5f2259db1155fc92344611aad01e8727be5b19836eed",
+      "age": 14,
+      "survey_q1_answer": false,
+      "country_code": "AU",
+      "profila_consent": true
+    },
+    {
+      "user_id_hash": "122b0cf3e2f8b17ed0b7cec233cd7498086fc16fdb597d5a230f6806483b1bb2",
+      "age": 15,
+      "survey_q1_answer": false,
+      "country_code": "CH",
+      "profila_consent": true
+    },
+    {
+      "user_id_hash": "752a24dc41219eb32a00c0775056cbe804095bdec23da20b67be2526d68209eb",
+      "age": 16,
+      "survey_q1_answer": false,
+      "country_code": "DE",
+      "profila_consent": true
+    },
+    {
+      "user_id_hash": "e95234b7489d6e37c7561313b7e5f625facc4b6e890c84a72765eb41412dedc6",
+      "age": 17,
+      "survey_q1_answer": false,
+      "country_code": "GB",
+      "profila_consent": true
+    },
+    {
+      "user_id_hash": "48097a937312d8e269af5e667a3894c064a8b4ac99d0c1dd29a0539f9ea9989f",
+      "age": 18,
+      "survey_q1_answer": false,
+      "country_code": "US",
+      "profila_consent": true
+    },
+    {
+      "user_id_hash": "c77f4c8e3695f9e497e6d6f7e25a08846191a29d69e3062f8a9907b36d0aeb27",
+      "age": 14,
+      "survey_q1_answer": false,
+      "country_code": "FR",
+      "profila_consent": true
+    },
+    {
+      "user_id_hash": "354d81e7b57bddc5a312edca8e17145b846834457ecf333dd85c00fabddd36d3",
+      "age": 15,
+      "survey_q1_answer": false,
+      "country_code": "AU",
+      "profila_consent": true
+    },
+    {
+      "user_id_hash": "47e67ac55beb9eb36c497cf61d851486a44ce983bad71542b88551f39a15295e",
+      "age": 16,
+      "survey_q1_answer": false,
+      "country_code": "CH",
+      "profila_consent": true
+    },
+    {
+      "user_id_hash": "d3f6862a21bc9a45cf9af0da556356cb6a7c43afb1cb059f8c4ed1b51d6b0145",
+      "age": 17,
+      "survey_q1_answer": false,
+      "country_code": "DE",
+      "profila_consent": true
+    },
+    {
+      "user_id_hash": "ae44fd7eb22899b8598cfe4f1d56f9a5e0a9b4678e5bf8cbf40224d0130f16b4",
+      "age": 18,
+      "survey_q1_answer": false,
+      "country_code": "GB",
+      "profila_consent": true
+    },
+    {
+      "user_id_hash": "335062c7ea6d223f2d10410817cebb8d856646169f3148a28124111e224311ec",
+      "age": 14,
+      "survey_q1_answer": false,
+      "country_code": "US",
+      "profila_consent": true
+    },
+    {
+      "user_id_hash": "8f3be98ec4914935f129aa8643672f91b9a43706a080cebc77bf5e1fb2599bac",
+      "age": 15,
+      "survey_q1_answer": false,
+      "country_code": "FR",
+      "profila_consent": true
+    },
+    {
+      "user_id_hash": "9da0c381b29d63fedd51e420c1df71065e232b78dea33a6081ee2861630c7d7e",
+      "age": 16,
+      "survey_q1_answer": false,
+      "country_code": "AU",
+      "profila_consent": true
+    },
+    {
+      "user_id_hash": "af0c10fb9fda80c3bead45b0e4f9f43fb813be5f1b7e923297388f6a98af64d0",
+      "age": 17,
+      "survey_q1_answer": false,
+      "country_code": "CH",
+      "profila_consent": true
+    },
+    {
+      "user_id_hash": "6e00251f0dae8997b67de4e0d1fae51e9fd87179f0fb9b6cfe51f8acbc07a1d6",
+      "age": 18,
+      "survey_q1_answer": false,
+      "country_code": "DE",
+      "profila_consent": true
+    }
+  ]
+}
