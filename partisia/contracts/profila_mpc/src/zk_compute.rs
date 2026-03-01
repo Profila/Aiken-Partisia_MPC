@@ -29,7 +29,8 @@ const AGE_THRESHOLD: i64 = 18;
 /// For the PoC, we use a unified computation that sums a conditional:
 ///   for each secret, add 1 if value > threshold, else add 0.
 /// This generalises to both query types.
-pub fn zk_compute() -> Sbi64 {
+#[zk_compute(shortname = 0x61)]
+pub fn compute_aggregate() -> Sbi64 {
     let threshold: Sbi64 = Sbi64::from(AGE_THRESHOLD);
     let mut count: Sbi64 = Sbi64::from(0);
     let one: Sbi64 = Sbi64::from(1);
