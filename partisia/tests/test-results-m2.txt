@@ -1,0 +1,19 @@
+
+running 9 tests
+test tests::test_compute_survey_match_result ... ok
+test tests::test_decode_zero_result ... ok
+test tests::test_decode_large_result ... ok
+test tests::test_decode_short_byte_slice ... ok
+test tests::test_compute_age_threshold_result ... ok
+test tests::test_decode_empty_slice ... ok
+test tests::test_init_contract_rejects_invalid_query_types ... ok
+test tests::test_init_contract_min_participants_validation ... ok
+test tests::test_init_contract_valid_query_types ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

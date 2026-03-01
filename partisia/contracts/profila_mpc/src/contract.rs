@@ -1,7 +1,7 @@
 #[macro_use]
 extern crate pbc_contract_codegen;
 extern crate pbc_contract_common;
-mod zk_compute;
+extern crate pbc_lib;
 
 use pbc_contract_common::address::Address;
 use pbc_contract_common::context::ContractContext;
@@ -9,7 +9,11 @@ use pbc_contract_common::events::EventGroup;
 use pbc_contract_common::zk::{
     CalculationStatus, SecretVarId, ZkClosed, ZkInputDef, ZkState, ZkStateChange,
 };
-use pbc_zk::Sbi64;
+use read_write_rpc_derive::ReadWriteRPC;
+use read_write_state_derive::ReadWriteState;
+
+/// Bit length of an Sbi64 secret value (64 bits).
+const BITLENGTH_OF_SECRET_VALUE: u32 = 64;
 
 // ---------------------------------------------------------------------------
 // Secret Variable Metadata
@@ -102,7 +106,7 @@ fn submit_secret_value(
 ) -> (
     ProfilaMpcState,
     Vec<EventGroup>,
-    ZkInputDef<SecretVarType, Sbi64>,
+    ZkInputDef<SecretVarType>,
 ) {
     // Prevent duplicate submissions from the same address
     assert!(
@@ -110,7 +114,7 @@ fn submit_secret_value(
             .secret_variables
             .iter()
             .chain(zk_state.pending_inputs.iter())
-            .all(|(_, v)| v.owner != context.sender),
+            .all(|v| v.owner != context.sender),
         "Each participant can only submit one secret value"
     );
 
@@ -120,10 +124,12 @@ fn submit_secret_value(
         "Computation already complete — no more inputs accepted"
     );
 
-    let input_def = ZkInputDef::with_metadata(
-        Some(on_variable_inputted::SHORTNAME),
-        SecretVarType::UserValue {},
-    );
+    // 64-bit secret integer = 64 bits
+    let input_def = ZkInputDef {
+        seal: false,
+        metadata: SecretVarType::UserValue {},
+        expected_bit_lengths: vec![BITLENGTH_OF_SECRET_VALUE],
+    };
 
     (state, vec![], input_def)
 }
@@ -131,7 +137,7 @@ fn submit_secret_value(
 /// Optional callback when a secret variable is confirmed on-chain.
 /// We don't need to do anything here for the PoC, but it's good
 /// practice to include the handler.
-#[zk_on_variable_inputted(shortname = 0x41)]
+#[zk_on_variable_inputted]
 fn on_variable_inputted(
     _context: ContractContext,
     state: ProfilaMpcState,
@@ -172,14 +178,14 @@ fn start_computation(
         state.min_participants
     );
 
-    // Start the ZK computation defined in zk_compute.rs
+    // Start the ZK computation defined in zk_compute.rs.
+    // The metadata vec describes each output variable from the computation.
     (
         state,
         vec![],
-        vec![zk_compute::compute_result::start(
-            Some(on_compute_complete::SHORTNAME),
-            &SecretVarType::ComputeResult {},
-        )],
+        vec![ZkStateChange::start_computation(vec![
+            SecretVarType::ComputeResult {},
+        ])],
     )
 }
 
@@ -189,7 +195,7 @@ fn start_computation(
 
 /// Called automatically when the MPC computation finishes.
 /// Requests declassification of the aggregate result.
-#[zk_on_compute_complete(shortname = 0x42)]
+#[zk_on_compute_complete]
 fn on_compute_complete(
     _context: ContractContext,
     state: ProfilaMpcState,

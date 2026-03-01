@@ -4,13 +4,13 @@ use pbc_zk::*;
 /// Must match SecretVarType::UserValue discriminant (0) in contract.rs.
 const USER_VALUE_KIND: u8 = 0u8;
 
-/// The age threshold for the "age_threshold" query.
+/// The age threshold for the "age_threshold" query (public constant).
 /// Users with age > 18 are counted.
-const AGE_THRESHOLD: Sbi64 = Sbi64::from(18);
+const AGE_THRESHOLD: i64 = 18;
 
 /// Performs the MPC computation over all submitted secret values.
 ///
-/// This function runs securely across 4 MPC nodes — no single node
+/// This function runs securely across 4 MPC nodes -- no single node
 /// ever sees an individual user's value. The result is an aggregate
 /// count returned as a secret Sbi64, which is then declassified by
 /// the on_compute_complete handler.
@@ -21,7 +21,7 @@ const AGE_THRESHOLD: Sbi64 = Sbi64::from(18);
 ///
 /// Both computations produce a single Sbi64 count/sum.
 /// The query_type dispatch happens via metadata tagging at the
-/// contract level — here we simply count values > threshold
+/// contract level -- here we simply count values > threshold
 /// which works for both cases:
 ///   - age_threshold: threshold = 18, values are ages
 ///   - survey_match:  threshold = 0, values are 0 or 1 (sum = count of 1s)
@@ -29,8 +29,8 @@ const AGE_THRESHOLD: Sbi64 = Sbi64::from(18);
 /// For the PoC, we use a unified computation that sums a conditional:
 ///   for each secret, add 1 if value > threshold, else add 0.
 /// This generalises to both query types.
-#[zk_compute(shortname = 0x61)]
-pub fn compute_result() -> Sbi64 {
+pub fn zk_compute() -> Sbi64 {
+    let threshold: Sbi64 = Sbi64::from(AGE_THRESHOLD);
     let mut count: Sbi64 = Sbi64::from(0);
     let one: Sbi64 = Sbi64::from(1);
 
@@ -42,13 +42,10 @@ pub fn compute_result() -> Sbi64 {
             // For survey_match: values are 0 or 1, so value > 0 gives count of 1s
             //
             // The comparison returns a secret boolean (Sbi1).
-            // We convert it to Sbi64: if true, add 1; if false, add 0.
-            //
-            // NOTE: In ZK Rust, we cannot branch on a secret boolean
-            // to assign a public value. Instead, we use arithmetic:
-            //   result of (value > threshold) is 0 or 1 as Sbi64
-            //   which we can add directly.
-            let exceeds_threshold: Sbi64 = if value > AGE_THRESHOLD { one } else { Sbi64::from(0) };
+            // In the mock test library, comparisons return bool directly.
+            // In the real ZK runtime, this branches on secret booleans.
+            let exceeds_threshold: Sbi64 =
+                if value > threshold { one } else { Sbi64::from(0) };
             count = count + exceeds_threshold;
         }
     }

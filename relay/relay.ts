@@ -56,7 +56,18 @@ interface RelayLogEntry {
 interface BlockfrostUtxo {
   readonly tx_hash: string;
   readonly output_index: number;
-  readonly inline_datum: unknown;
+  readonly inline_datum: string | null;
+  readonly data_hash: string | null;
+}
+
+interface BlockfrostDatumJson {
+  readonly json_value: {
+    readonly constructor: number;
+    readonly fields: readonly (
+      | { readonly bytes: string }
+      | { readonly int: number }
+    )[];
+  };
 }
 
 // ---------------------------------------------------------------------------
@@ -110,21 +121,54 @@ async function fetchUtxos(): Promise<readonly BlockfrostUtxo[]> {
 }
 
 // ---------------------------------------------------------------------------
-// Parse inline datum into MpcRequest
+// Decode hex-encoded bytes to UTF-8 string
 // ---------------------------------------------------------------------------
 
-function parseDatum(raw: unknown): MpcRequestDatum | null {
-  if (!raw || typeof raw !== "object") return null;
+function hexToUtf8(hex: string): string {
+  const bytes = new Uint8Array(
+    hex.match(/.{1,2}/g)?.map((b) => parseInt(b, 16)) ?? [],
+  );
+  return new TextDecoder().decode(bytes);
+}
 
-  // Blockfrost returns inline datums as JSON objects.
-  // The exact shape depends on how the datum was serialised.
-  // For the PoC we accept a flexible structure and extract fields.
-  const obj = raw as Record<string, unknown>;
+// ---------------------------------------------------------------------------
+// Fetch datum JSON from Blockfrost's datum endpoint
+// ---------------------------------------------------------------------------
 
+async function fetchDatumJson(
+  dataHash: string,
+): Promise<BlockfrostDatumJson | null> {
+  const url = `${BLOCKFROST_URL}/scripts/datum/${dataHash}`;
+  const response = await fetch(url, {
+    headers: { project_id: BLOCKFROST_PROJECT_ID },
+  });
+  if (!response.ok) return null;
+  return (await response.json()) as BlockfrostDatumJson;
+}
+
+// ---------------------------------------------------------------------------
+// Parse Blockfrost datum JSON into MpcRequest
+// ---------------------------------------------------------------------------
+
+function parseDatumFields(
+  datumJson: BlockfrostDatumJson,
+): MpcRequestDatum | null {
   try {
-    const dataset_id = String(obj["dataset_id"] ?? obj["fields"]?.[0] ?? "");
-    const query_type = String(obj["query_type"] ?? obj["fields"]?.[1] ?? "");
-    const timestamp = Number(obj["timestamp"] ?? obj["fields"]?.[4] ?? 0);
+    const { fields } = datumJson.json_value;
+    if (!fields || fields.length < 5) {
+      console.warn("  ⚠ Datum has fewer than 5 fields");
+      return null;
+    }
+
+    // MpcRequest: Constr(0, [dataset_id, query_type, initiator_pkh,
+    //                         partisia_contract, timestamp])
+    const dataset_id = hexToUtf8("bytes" in fields[0] ? fields[0].bytes : "");
+    const query_type = hexToUtf8("bytes" in fields[1] ? fields[1].bytes : "");
+    const initiator_pkh = "bytes" in fields[2] ? fields[2].bytes : "";
+    const partisia_contract = hexToUtf8(
+      "bytes" in fields[3] ? fields[3].bytes : "",
+    );
+    const timestamp = "int" in fields[4] ? fields[4].int : 0;
 
     // Validate required fields
     if (!dataset_id) {
@@ -143,14 +187,12 @@ function parseDatum(raw: unknown): MpcRequestDatum | null {
     return {
       dataset_id,
       query_type,
-      initiator_pkh: String(obj["initiator_pkh"] ?? obj["fields"]?.[2] ?? ""),
-      partisia_contract: String(
-        obj["partisia_contract"] ?? obj["fields"]?.[3] ?? "",
-      ),
+      initiator_pkh,
+      partisia_contract,
       timestamp,
     };
   } catch {
-    console.warn("  ⚠ Could not parse datum");
+    console.warn("  ⚠ Could not parse datum fields");
     return null;
   }
 }
@@ -190,7 +232,20 @@ async function pollOnce(): Promise<number> {
     if (processed.has(key)) continue;
 
     console.log(`\n📦 New UTxO found: ${key}`);
-    const datum = parseDatum(utxo.inline_datum);
+
+    // Fetch and parse datum via Blockfrost's datum endpoint
+    if (!utxo.data_hash) {
+      console.warn("  ⚠ Skipping — no data_hash on UTxO");
+      processed.add(key);
+      continue;
+    }
+    const datumJson = await fetchDatumJson(utxo.data_hash);
+    if (!datumJson) {
+      console.warn("  ⚠ Skipping — could not fetch datum JSON");
+      processed.add(key);
+      continue;
+    }
+    const datum = parseDatumFields(datumJson);
     if (!datum) {
       console.warn("  ⚠ Skipping — could not parse datum");
       processed.add(key);
@@ -244,8 +299,9 @@ async function main(): Promise<void> {
     process.exit(1);
   }
   if (!PBC_CONTRACT_ADDRESS) {
-    console.error("❌ PBC_CONTRACT_ADDRESS not set in .env");
-    process.exit(1);
+    console.warn(
+      "⚠️  PBC_CONTRACT_ADDRESS not set — relay will log Cardano UTxOs only",
+    );
   }
 
   const mode = process.argv.includes("--watch") ? "watch" : "once";

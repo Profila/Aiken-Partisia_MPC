@@ -15,8 +15,12 @@ cardano/keys/
 cardano/scripts/deploy-m1.json
 cardano/scripts/node_modules/
 
-# Rust build artifacts
+# Rust build artifacts (workspace target + package target)
+partisia/contracts/target/
 partisia/contracts/profila_mpc/target/
+
+# PBC ZK compiler cache
+partisia/contracts/target/zkcompiler-*.jar
 
 # Node.js
 node_modules/
