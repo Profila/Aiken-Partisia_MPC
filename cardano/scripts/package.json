@@ -1,0 +1,16 @@
+{
+  "name": "profila-mpc-cardano-scripts",
+  "version": "1.0.0",
+  "description": "Deploy scripts for Profila MPC Aiken contract (Cardano preprod)",
+  "type": "module",
+  "scripts": {
+    "deploy": "npx tsx deploy-m1.ts"
+  },
+  "dependencies": {
+    "@lucid-evolution/lucid": "^0.4.29",
+    "dotenv": "^17.3.1"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.0"
+  }
+}

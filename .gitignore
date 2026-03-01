@@ -10,6 +10,11 @@ Thumbs.db
 cardano/build/
 cardano/plutus.json
 
+# Cardano keys and deploy outputs (NEVER commit private keys)
+cardano/keys/
+cardano/scripts/deploy-m1.json
+cardano/scripts/node_modules/
+
 # Rust build artifacts
 partisia/contracts/profila_mpc/target/
 
