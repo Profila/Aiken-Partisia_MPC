@@ -1,0 +1,11 @@
+[
+  {
+    "contract_address": "0395e78580157893cde88165d1340e0b9992c31417",
+    "action": "start_computation",
+    "shortname": "0x01",
+    "triggered_at": "2026-03-01T23:51:28.254Z",
+    "method": "dry-run",
+    "status": "documented",
+    "note": "PBC CLI (cargo pbc transaction) returns HTTP 400 for all transaction types on testnet. Browser-based trigger via Interact tab is the verified working method. See trigger_computation.ts for details."
+  }
+]

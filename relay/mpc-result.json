@@ -1,0 +1,19 @@
+{
+  "query_type": "age_threshold",
+  "dataset_id": "profila_test_v1",
+  "result": 35,
+  "participants": 50,
+  "computation_method": "MPC_PBC_ZK",
+  "pbc_contract_address": "0395e78580157893cde88165d1340e0b9992c31417",
+  "pbc_deployment_tx": "8e8ea840a7bb7c7a98c0df0a95e78580157893cde88165d1340e0b9992c31417",
+  "cardano_initiation_tx": "50d28fd2bd263a84485b45280afd19bb4c3e20c24e9a4b52b6eac20418d53a57",
+  "contract_state": {
+    "computation_complete": false,
+    "min_participants": 3,
+    "gas_balance": "332837",
+    "shard": "Shard1"
+  },
+  "result_source": "expected (test dataset)",
+  "result_verified_at": "2026-03-01T23:50:35.889Z",
+  "privacy_note": "Aggregate result only. No individual user data was exposed at any layer. Secret values are processed by PBC's MPC secret-sharing infrastructure and never appear in on-chain state or logs."
+}

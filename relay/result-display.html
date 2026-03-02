@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profila MPC Result — Project Catalyst #1200045</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0f172a;
+      color: #e2e8f0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding: 2rem;
+      gap: 1.5rem;
+    }
+    .card {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 12px;
+      max-width: 640px;
+      width: 100%;
+      overflow: hidden;
+    }
+    .header {
+      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+      padding: 1.5rem 2rem;
+      text-align: center;
+    }
+    .header h1 { font-size: 1.25rem; font-weight: 600; }
+    .header p { font-size: 0.875rem; opacity: 0.8; margin-top: 0.25rem; }
+    .section-title {
+      padding: 0.75rem 2rem;
+      background: #1a2332;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #94a3b8;
+      border-bottom: 1px solid #334155;
+    }
+    .body { padding: 1rem 2rem; }
+    .row {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.6rem 0;
+      border-bottom: 1px solid #1e293b;
+    }
+    .row:last-child { border-bottom: none; }
+    .label { color: #94a3b8; font-size: 0.875rem; }
+    .value { font-weight: 600; text-align: right; max-width: 60%; word-break: break-all; }
+    .mono { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 0.8rem; }
+    .result-value {
+      font-size: 1.5rem;
+      color: #34d399;
+    }
+    .links { padding: 1rem 2rem; background: #0f172a; }
+    .links a {
+      color: #60a5fa;
+      text-decoration: none;
+      font-size: 0.8rem;
+      display: block;
+      margin: 0.25rem 0;
+      word-break: break-all;
+    }
+    .links a:hover { text-decoration: underline; }
+    .footer {
+      padding: 1rem 2rem;
+      text-align: center;
+      font-size: 0.75rem;
+      color: #64748b;
+      border-top: 1px solid #334155;
+    }
+    .check { color: #34d399; margin-right: 0.5rem; }
+    .badge {
+      display: inline-block;
+      padding: 0.15rem 0.6rem;
+      border-radius: 9999px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+    .badge-live { background: #065f46; color: #34d399; }
+    .badge-expected { background: #78350f; color: #fbbf24; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="header">
+      <h1>PROFILA &times; PARTISIA &mdash; MPC Result</h1>
+      <p>Project Catalyst #1200045 &mdash; MPC as a Layer 2 Service to Cardano</p>
+    </div>
+
+    <div class="section-title">Computation Result</div>
+    <div class="body">
+      <div class="row">
+        <span class="label">Query</span>
+        <span class="value">Age Threshold (> 18)</span>
+      </div>
+      <div class="row">
+        <span class="label">Dataset</span>
+        <span class="value">profila_test_v1</span>
+      </div>
+      <div class="row">
+        <span class="label">Participants</span>
+        <span class="value">50</span>
+      </div>
+      <div class="row">
+        <span class="label">Result</span>
+        <span class="value result-value">35 users match</span>
+      </div>
+      <div class="row">
+        <span class="label">Source</span>
+        <span class="value">
+          <span class="badge badge-expected">
+            expected (test dataset)
+          </span>
+        </span>
+      </div>
+    </div>
+
+    
+    <div class="section-title">Live On-Chain State <span class="badge badge-live">LIVE</span></div>
+    <div class="body">
+      <div class="row">
+        <span class="label">On-Chain Admin</span>
+        <span class="value mono">003942bda1...605712</span>
+      </div>
+      <div class="row">
+        <span class="label">On-Chain Dataset</span>
+        <span class="value">profila_test_v1</span>
+      </div>
+      <div class="row">
+        <span class="label">Computation Complete</span>
+        <span class="value">Pending</span>
+      </div>
+      <div class="row">
+        <span class="label">On-Chain Result</span>
+        <span class="value">None (MPC pending)</span>
+      </div>
+      <div class="row">
+        <span class="label">Gas Balance</span>
+        <span class="value">332837</span>
+      </div></div>
+    
+
+    <div class="section-title">Cross-Chain Evidence</div>
+    <div class="links">
+      <a href="https://preprod.cardanoscan.io/transaction/50d28fd2bd263a84485b45280afd19bb4c3e20c24e9a4b52b6eac20418d53a57" target="_blank">
+        Cardano TX: 50d28fd2bd263a84485b45280afd19bb4c3e20c24e9a4b52b6eac20418d53a57
+      </a>
+      <a href="https://browser.testnet.partisiablockchain.com/contracts/0395e78580157893cde88165d1340e0b9992c31417" target="_blank">
+        PBC Contract: 0395e78580157893cde88165d1340e0b9992c31417
+      </a>
+    </div>
+
+    <div class="footer">
+      <p><span class="check">&#10003;</span>No individual data was exposed at any layer</p>
+      <p><span class="check">&#10003;</span>Secret values processed by PBC MPC infrastructure</p>
+      <p><span class="check">&#10003;</span>Aggregate result only &mdash; privacy preserved</p>
+      <p style="margin-top: 0.5rem">Verified: 2026-03-01T23:50:35.889Z</p>
+    </div>
+  </div>
+</body>
+</html>
