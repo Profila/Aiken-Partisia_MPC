@@ -1,0 +1,15 @@
+{
+  "script_address": "addr_test1wzut662xhd8e4jq97fpdsml2pyqerejwzfg24red2n7gceczhkwaz",
+  "tx_hash": "50d28fd2bd263a84485b45280afd19bb4c3e20c24e9a4b52b6eac20418d53a57",
+  "validator_hash": "b8bd6946bb4f9ac805f242d86fea090191e64e1250aa8f2d54fc8c67",
+  "datum": {
+    "dataset_id": "profila_test_v1",
+    "query_type": "age_threshold",
+    "initiator_pkh": "fc1c993261d3d3104bcdbf3f54d16c134f634360e9b40a2328943224",
+    "partisia_contract": "",
+    "timestamp": 1772402835874
+  },
+  "deployed_at": "2026-03-01T22:07:16.546Z",
+  "network": "Preprod",
+  "cardanoscan_url": "https://preprod.cardanoscan.io/transaction/50d28fd2bd263a84485b45280afd19bb4c3e20c24e9a4b52b6eac20418d53a57"
+}

@@ -8,11 +8,9 @@ Thumbs.db
 
 # Aiken build artifacts
 cardano/build/
-cardano/plutus.json
 
-# Cardano keys and deploy outputs (NEVER commit private keys)
+# Cardano keys (NEVER commit private keys)
 cardano/keys/
-cardano/scripts/deploy-m1.json
 cardano/scripts/node_modules/
 
 # Rust build artifacts (workspace target + package target)
@@ -22,8 +20,7 @@ partisia/contracts/profila_mpc/target/
 # PBC keys (NEVER commit private keys)
 partisia/keys/
 
-# PBC deploy outputs
-partisia/deploy/deploy-m2.json
+# PBC deploy outputs — deploy-m2.json and deploy-m3.json are evidence (public data only)
 
 # PBC ZK compiler cache
 partisia/contracts/target/zkcompiler-*.jar

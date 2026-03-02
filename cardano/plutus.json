@@ -1,0 +1,103 @@
+{
+  "preamble": {
+    "title": "profila/mpc-cardano",
+    "description": "Aiken contracts for project 'profila/mpc-cardano'",
+    "version": "0.0.0",
+    "plutusVersion": "v3",
+    "compiler": {
+      "name": "Aiken",
+      "version": "v1.1.21+42babe5"
+    },
+    "license": "Apache-2.0"
+  },
+  "validators": [
+    {
+      "title": "profila_mpc.profila_mpc.spend",
+      "datum": {
+        "title": "datum",
+        "schema": {
+          "$ref": "#/definitions/profila_mpc~1MpcRequest"
+        }
+      },
+      "redeemer": {
+        "title": "redeemer",
+        "schema": {
+          "$ref": "#/definitions/profila_mpc~1MpcAction"
+        }
+      },
+      "compiledCode": "59016501010029800aba2aba1aab9faab9eaab9dab9a48888896600264646644b30013370e900118031baa00189919912cc004cdc3a400060126ea80162b3001300a375400b15980099b8748000c024dd5000c4cc89660026466446600400400244b30010018a508acc004cdc79bae30110010038a518998010011809000a01a40406eb0c03cc040c040c040c040c040c040c040c040c034dd518078051bae300e300f300f300c3754003159800cc004cdc79bae300e300c375400291100a50a514029159800acc004cdc79bae3002300c37540029110d6167655f7468726573686f6c64008a51899b8f375c600460186ea80052210c7375727665795f6d6174636800402913371090001bad300e300f300f300f300f300c375400314a08052294100a452820142300d300e001300c300a375400316402116402d164020601400260146016002600e6ea80062c8028c01c004c01cc020004c01c004c00cdd5003c52689b2b200201",
+      "hash": "b8bd6946bb4f9ac805f242d86fea090191e64e1250aa8f2d54fc8c67"
+    },
+    {
+      "title": "profila_mpc.profila_mpc.else",
+      "redeemer": {
+        "schema": {}
+      },
+      "compiledCode": "59016501010029800aba2aba1aab9faab9eaab9dab9a48888896600264646644b30013370e900118031baa00189919912cc004cdc3a400060126ea80162b3001300a375400b15980099b8748000c024dd5000c4cc89660026466446600400400244b30010018a508acc004cdc79bae30110010038a518998010011809000a01a40406eb0c03cc040c040c040c040c040c040c040c040c034dd518078051bae300e300f300f300c3754003159800cc004cdc79bae300e300c375400291100a50a514029159800acc004cdc79bae3002300c37540029110d6167655f7468726573686f6c64008a51899b8f375c600460186ea80052210c7375727665795f6d6174636800402913371090001bad300e300f300f300f300f300c375400314a08052294100a452820142300d300e001300c300a375400316402116402d164020601400260146016002600e6ea80062c8028c01c004c01cc020004c01c004c00cdd5003c52689b2b200201",
+      "hash": "b8bd6946bb4f9ac805f242d86fea090191e64e1250aa8f2d54fc8c67"
+    }
+  ],
+  "definitions": {
+    "ByteArray": {
+      "dataType": "bytes"
+    },
+    "Int": {
+      "dataType": "integer"
+    },
+    "aiken/crypto/VerificationKeyHash": {
+      "title": "VerificationKeyHash",
+      "dataType": "bytes"
+    },
+    "profila_mpc/MpcAction": {
+      "title": "MpcAction",
+      "description": "Redeemer actions for the Profila MPC contract.",
+      "anyOf": [
+        {
+          "title": "InitiateMPC",
+          "description": "Record an MPC initiation intent on-chain",
+          "dataType": "constructor",
+          "index": 0,
+          "fields": []
+        }
+      ]
+    },
+    "profila_mpc/MpcRequest": {
+      "title": "MpcRequest",
+      "description": "On-chain record of an MPC initiation request.\n The relay script polls for UTxOs containing this datum to bridge\n Cardano (Layer 1) to Partisia Blockchain (Layer 2).",
+      "anyOf": [
+        {
+          "title": "MpcRequest",
+          "dataType": "constructor",
+          "index": 0,
+          "fields": [
+            {
+              "title": "dataset_id",
+              "description": "Identifies which Profila dataset to query",
+              "$ref": "#/definitions/ByteArray"
+            },
+            {
+              "title": "query_type",
+              "description": "The computation to run: \"age_threshold\" or \"survey_match\"",
+              "$ref": "#/definitions/ByteArray"
+            },
+            {
+              "title": "initiator_pkh",
+              "description": "Payment key hash of the requester — must match a tx signer",
+              "$ref": "#/definitions/aiken~1crypto~1VerificationKeyHash"
+            },
+            {
+              "title": "partisia_contract",
+              "description": "Target Partisia contract address (may be empty at init)",
+              "$ref": "#/definitions/ByteArray"
+            },
+            {
+              "title": "timestamp",
+              "description": "POSIX timestamp in milliseconds when request was created",
+              "$ref": "#/definitions/Int"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
