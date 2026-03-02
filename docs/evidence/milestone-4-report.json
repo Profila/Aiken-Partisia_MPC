@@ -93,6 +93,11 @@
     "docs/evidence/milestone-4-report.json"
   ],
 
+  "videos": {
+    "m4_demo": "https://youtu.be/2YYvELDzrGo",
+    "combined_m1_m4": "https://youtu.be/jwwfdTSUS2w"
+  },
+
   "checklist": {
     "show_result_fetches_live_state": true,
     "binary_state_decoded": true,

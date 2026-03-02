@@ -83,6 +83,11 @@
     "test-data/profila_test_users.json"
   ],
 
+  "videos": {
+    "m3_demo": "https://youtu.be/psm2lMU7n1o",
+    "combined_m1_m4": "https://youtu.be/jwwfdTSUS2w"
+  },
+
   "checklist": {
     "pbc_zk_contract_deployed": true,
     "contract_state_initialized": true,

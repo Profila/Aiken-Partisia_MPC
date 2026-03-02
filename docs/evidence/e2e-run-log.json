@@ -189,6 +189,14 @@
     }
   },
 
+  "videos": {
+    "m1_aiken_contract": "https://youtu.be/QRj4tAt23Aw",
+    "m2_pbc_contract_relay": "https://youtu.be/lC_2EG6gxX0",
+    "m3_secret_inputs": "https://youtu.be/psm2lMU7n1o",
+    "m4_result_closeout": "https://youtu.be/2YYvELDzrGo",
+    "combined_m1_m4": "https://youtu.be/jwwfdTSUS2w"
+  },
+
   "privacy_summary": {
     "individual_data_exposed": false,
     "verification_points": [

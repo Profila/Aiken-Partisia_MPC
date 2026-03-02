@@ -123,3 +123,10 @@ curl -H "project_id: $BLOCKFROST_PROJECT_ID" \
 | Rust | 1.86.0 |
 | Java | OpenJDK 17.0.18 |
 | wasm32-unknown-unknown | installed via rustup |
+
+## Video Demos
+
+| Video | URL |
+|-------|-----|
+| M2 Demo | https://youtu.be/lC_2EG6gxX0 |
+| Combined M1-M4 | https://youtu.be/jwwfdTSUS2w |

@@ -13,7 +13,7 @@ Cardano preprod testnet. The contract creates an on-chain MPC initiation
 record that the off-chain relay (Milestone 2) monitors to bridge Cardano
 requests to Partisia Blockchain's MPC infrastructure.
 
-**All 6 acceptance criteria are met** (video pending recording).
+**All 6 acceptance criteria are met.**
 
 ---
 
@@ -25,7 +25,7 @@ requests to Partisia Blockchain's MPC infrastructure.
 | 2 | Contract has MPC initiation functionality | PASS | Section 3 — validator source |
 | 3 | PDF documentation | PASS | This document |
 | 4 | Test results in docs | PASS | Section 4 + `cardano/tests/test-results-m1.txt` |
-| 5 | YouTube video of demo | PENDING | To be recorded |
+| 5 | YouTube video of demo | PASS | [M1 Demo](https://youtu.be/QRj4tAt23Aw) &bull; [Combined M1-M4](https://youtu.be/jwwfdTSUS2w) |
 | 6 | Testnet execution verifiable on-chain | PASS | Section 5 — TX on CardanoScan |
 
 ---
