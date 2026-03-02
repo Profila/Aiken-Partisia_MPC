@@ -1,19 +1,29 @@
 {
   "query_type": "age_threshold",
   "dataset_id": "profila_test_v1",
-  "result": 35,
-  "participants": 50,
+  "expected_result": 35,
+  "participants_expected": 50,
+  "participants_submitted": 5,
   "computation_method": "MPC_PBC_ZK",
   "pbc_contract_address": "0395e78580157893cde88165d1340e0b9992c31417",
   "pbc_deployment_tx": "8e8ea840a7bb7c7a98c0df0a95e78580157893cde88165d1340e0b9992c31417",
   "cardano_initiation_tx": "50d28fd2bd263a84485b45280afd19bb4c3e20c24e9a4b52b6eac20418d53a57",
+  "secret_input_txs": [
+    "c4c0450bbb06a9ce5fcce56229e88e0e51ec5aa5a1d706dde1c4313340635e96",
+    "d774f1f5e64cc14cb220b5d324fe47d319c9f5ceb56eb5a7dd75d3f861f811eb",
+    "d4ce72e1952064735132d629a3fd3d57f27c8914e57c05ead53111408e2b01a1",
+    "a61222941b834e8b3cb5afcadaae7ca50b2b273136a266b0a04e5786335390dd",
+    "9556d0f653e53de13f3ac4d29338d2ff6c4145cc95a78c1a553a77d880313c8d"
+  ],
   "contract_state": {
     "computation_complete": false,
     "min_participants": 3,
-    "gas_balance": "332837",
+    "next_variable_id": 5,
+    "calculation_status": "WAITING",
     "shard": "Shard1"
   },
-  "result_source": "expected (test dataset)",
-  "result_verified_at": "2026-03-01T23:50:35.889Z",
-  "privacy_note": "Aggregate result only. No individual user data was exposed at any layer. Secret values are processed by PBC's MPC secret-sharing infrastructure and never appear in on-chain state or logs."
+  "result_source": "expected (test dataset) — 5 real secret inputs submitted on-chain, MPC computation pending trigger",
+  "result_verified_at": "2026-03-02T14:34:00.000Z",
+  "privacy_note": "Aggregate result only. No individual user data was exposed at any layer. Secret values are processed by PBC's MPC secret-sharing infrastructure via encrypted shares to 4 ZK engines. Raw values never appear in on-chain state, logs, or submission records.",
+  "sdk_used": "@partisiablockchain/zk-client + @partisiablockchain/blockchain-api-transaction-client"
 }

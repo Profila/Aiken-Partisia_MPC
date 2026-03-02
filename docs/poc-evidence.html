@@ -389,10 +389,10 @@ nav .links a:hover{color:#fff;text-decoration:none}
           <span class="ms-tag complete">&#10003; Complete</span>
         </div>
         <div class="ms-body">
-          <p>Created a synthetic dataset of 50 users and submitted 20 secrets to the PBC contract. The submission log contains <strong>only hashed user IDs and TX references</strong> &mdash; zero raw ages or survey answers are recorded anywhere in the system.</p>
+          <p>Created a synthetic dataset of 50 users and submitted <strong>5 real on-chain ZK secret-input transactions</strong> to the PBC contract via the <code>@partisiablockchain/zk-client</code> TypeScript SDK. Each transaction encrypts the secret for all 4 MPC engines. The submission log contains <strong>only hashed user IDs, sender addresses, and TX references</strong> &mdash; zero raw ages or survey answers are recorded anywhere in the system.</p>
           <div class="ms-evidence">
             <a href="https://github.com/Profila/Aiken-Partisia_MPC/blob/main/relay/secret-submissions-log.json" target="_blank">&#128274; Submission Log (no raw values)</a>
-            <a href="https://github.com/Profila/Aiken-Partisia_MPC/blob/main/relay/m3-state-evidence.json" target="_blank">&#128203; Privacy Evidence</a>
+            <a href="https://browser.testnet.partisiablockchain.com/contracts/0395e78580157893cde88165d1340e0b9992c31417?tab=transactions" target="_blank">&#128279; PBC Transactions (live)</a>
             <a href="https://github.com/Profila/Aiken-Partisia_MPC/blob/main/test-data/profila_test_users.json" target="_blank">&#128202; Test Dataset</a>
           </div>
         </div>
@@ -449,12 +449,15 @@ nav .links a:hover{color:#fff;text-decoration:none}
         <div class="state-row"><span class="state-key">dataset_id</span><span class="state-val">profila_test_v1</span></div>
         <div class="state-row"><span class="state-key">query_type</span><span class="state-val">age_threshold</span></div>
         <div class="state-row"><span class="state-key">min_participants</span><span class="state-val">3</span></div>
-        <div class="state-row"><span class="state-key">result</span><span class="state-val" style="color:var(--amber)">None (pending)</span></div>
+        <div class="state-row"><span class="state-key">Secret Inputs</span><span class="state-val" style="color:#22c55e">5 on-chain TXs</span></div>
+        <div class="state-row"><span class="state-key">ZK Variables</span><span class="state-val">nextVariableId = 5</span></div>
+        <div class="state-row"><span class="state-key">Calculation Status</span><span class="state-val" style="color:var(--amber)">WAITING</span></div>
         <div class="state-row"><span class="state-key">computation_complete</span><span class="state-val">false</span></div>
-        <div class="state-row"><span class="state-key">Gas Balance</span><span class="state-val">332,837</span></div>
         <div class="state-row"><span class="state-key">Shard</span><span class="state-val">Shard1</span></div>
         <div style="margin-top:.8rem;text-align:center">
           <a href="https://browser.testnet.partisiablockchain.com/contracts/0395e78580157893cde88165d1340e0b9992c31417" target="_blank" style="font-size:.75rem">View on PBC Browser &rarr;</a>
+          &nbsp;&middot;&nbsp;
+          <a href="https://browser.testnet.partisiablockchain.com/contracts/0395e78580157893cde88165d1340e0b9992c31417?tab=transactions" target="_blank" style="font-size:.75rem">Transactions &rarr;</a>
         </div>
       </div>
     </div>

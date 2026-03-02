@@ -93,26 +93,42 @@
     {
       "stage": 4,
       "name": "Secret Input Submission (Users → PBC MPC)",
-      "description": "Simulate 20 Profila users submitting their secret ages to the PBC contract. Per the architecture, secrets go DIRECTLY to PBC's MPC secret-sharing infrastructure — never through Cardano. The submission log contains ONLY user_id_hash and pbc_tx_id; zero raw values are recorded anywhere.",
+      "description": "5 Profila test users submit their secret ages to the PBC contract via REAL on-chain ZK transactions using the @partisiablockchain/zk-client TypeScript SDK. Per the architecture, secrets go DIRECTLY to PBC's MPC secret-sharing infrastructure — never through Cardano. Each transaction encrypts the secret for 4 MPC engines and submits encrypted shares on-chain. The submission log contains ONLY user_id_hash, pbc_sender, and pbc_tx_id; zero raw values are recorded anywhere.",
       "artifacts": {
         "submission_script": "relay/submit_secrets.ts",
         "submission_log": "relay/secret-submissions-log.json",
         "test_dataset": "test-data/profila_test_users.json"
       },
       "execution": {
-        "command": "npx ts-node submit_secrets.ts --contract 0395e785... --query age_threshold --count 20",
-        "secrets_submitted": 20,
+        "command": "npx ts-node submit_secrets.ts --contract 0395e78580157893cde88165d1340e0b9992c31417 --query age_threshold --count 5",
+        "secrets_submitted": 5,
         "query_type": "age_threshold",
-        "raw_values_logged": false
+        "raw_values_logged": false,
+        "sdk_used": "@partisiablockchain/zk-client + @partisiablockchain/blockchain-api-transaction-client",
+        "real_on_chain_transactions": true
       },
+      "on_chain_tx_hashes": [
+        "c4c0450bbb06a9ce5fcce56229e88e0e51ec5aa5a1d706dde1c4313340635e96",
+        "d774f1f5e64cc14cb220b5d324fe47d319c9f5ceb56eb5a7dd75d3f861f811eb",
+        "d4ce72e1952064735132d629a3fd3d57f27c8914e57c05ead53111408e2b01a1",
+        "a61222941b834e8b3cb5afcadaae7ca50b2b273136a266b0a04e5786335390dd",
+        "9556d0f653e53de13f3ac4d29338d2ff6c4145cc95a78c1a553a77d880313c8d"
+      ],
+      "pbc_senders": [
+        "0077475a2deceb9c073e816bb98a8832a9f41daa03",
+        "0084400b5b22b47c24140c3e7c7454d12d01bea6a8",
+        "00d85675808c74ccfebb262478a067d49e87ba3a8a",
+        "0043d3baeb08c94e84026847113e9d973a54d3b85f",
+        "00d220baae1d73526743658eb09a7d92345f73dd80"
+      ],
       "privacy_verification": {
-        "log_fields_per_entry": ["user_id_hash", "pbc_tx_id", "query_type", "submitted_at"],
+        "log_fields_per_entry": ["user_id_hash", "pbc_sender", "pbc_tx_id", "query_type", "submitted_at", "on_chain"],
         "individual_data_in_log": false,
         "individual_data_in_contract_state": false,
         "individual_data_in_secret_tab": false,
         "individual_data_in_relay_output": false
       },
-      "timestamp": "2026-03-01T23:40:21Z"
+      "timestamp": "2026-03-02T14:34:00Z"
     },
 
     {

@@ -11,6 +11,9 @@
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
+    "@partisiablockchain/blockchain-api-transaction-client": "^6.90.0",
+    "@partisiablockchain/zk-client": "^6.105.0",
+    "@secata-public/bitmanipulation-ts": "^3.4.0",
     "@types/node": "^25.3.3",
     "dotenv": "^17.3.1",
     "typescript": "^5.9.3"

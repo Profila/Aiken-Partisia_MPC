@@ -38,10 +38,10 @@
       "status": "Complete",
       "deliverables": [
         "Synthetic dataset (50 users, 35 over age 18, 28 survey=true)",
-        "Secret submission script (20 secrets submitted, zero raw values logged)",
+        "Real secret submission via PBC TypeScript SDK — 5 confirmed on-chain ZK transactions",
         "Privacy verification: no individual data in contract state, secret tab, logs, or relay output"
       ],
-      "evidence": ["test-data/profila_test_users.json", "relay/secret-submissions-log.json", "relay/m3-state-evidence.json", "docs/evidence/milestone-3-report.json"]
+      "evidence": ["test-data/profila_test_users.json", "relay/submit_secrets.ts", "relay/secret-submissions-log.json", "docs/evidence/milestone-3-report.json"]
     },
     {
       "id": "M4",
@@ -50,11 +50,12 @@
       "deliverables": [
         "show_result.ts fetches live PBC state via REST API, decodes ProfilaMpcState from on-chain binary",
         "trigger_computation.ts documents computation trigger (browser-based due to CLI limitation)",
+        "5 real secret-input transactions submitted to PBC contract via @partisiablockchain/zk-client SDK",
         "result-display.html with cross-chain evidence and live on-chain state",
         "E2E run log documenting all 6 stages with real TX hashes",
         "Closeout report (this document)"
       ],
-      "evidence": ["relay/show_result.ts", "relay/trigger_computation.ts", "relay/mpc-result.json", "relay/result-display.html", "docs/evidence/e2e-run-log.json"]
+      "evidence": ["relay/show_result.ts", "relay/submit_secrets.ts", "relay/trigger_computation.ts", "relay/mpc-result.json", "relay/secret-submissions-log.json", "relay/result-display.html", "docs/evidence/e2e-run-log.json"]
     }
   ],
 
@@ -81,17 +82,19 @@
   "key_achievements": [
     "Demonstrated Cardano-to-PBC cross-chain coordination via off-chain relay",
     "Deployed a ZK MPC contract on PBC testnet with verifiable on-chain state",
+    "Submitted 5 real ZK secret-input transactions via @partisiablockchain/zk-client TypeScript SDK",
     "Proved that secret user data never appears in any on-chain state, log, or output",
     "Built binary state decoder that reads ProfilaMpcState directly from PBC REST API",
     "Created comprehensive evidence trail with real TX hashes on both chains"
   ],
 
   "technical_notes": {
-    "pbc_cli_limitation": "The cargo pbc transaction CLI returns HTTP 400 for all transaction types on PBC testnet (verified with official example contracts). Contract deployment and interaction use the PBC testnet browser instead. Post-PoC enhancement: integrate PBC TypeScript SDK for full programmatic access.",
+    "pbc_cli_limitation": "The cargo pbc transaction CLI returns HTTP 400 for all transaction types on PBC testnet (verified with official example contracts). Contract deployment uses the PBC testnet browser. Secret input submission uses the PBC TypeScript SDK.",
+    "pbc_typescript_sdk": "Secret inputs submitted programmatically via @partisiablockchain/zk-client (RealZkClient.buildOnChainInputTransaction) + @partisiablockchain/blockchain-api-transaction-client (BlockchainTransactionClient.signAndSend). Each transaction encrypts the secret for all 4 MPC engines.",
     "pbc_sdk_version": "v.16.126.0 (binder 11.9.0) — upgraded from v15.1.0 for testnet binder compatibility",
     "pbc_rest_api": "Contract state accessible via GET /chain/contracts/{address} — the /blockchain/contracts/ endpoint returns 404",
     "binary_state_decoding": "ProfilaMpcState decoded by locating the administrator address anchor in the serializedContract base64 blob, then reading fields sequentially per PBC's ReadWriteState format",
-    "secret_submissions": "PoC uses simulated PBC transactions (mock TX IDs) for secret submissions. Live secret sharing requires the PBC TypeScript SDK secret-input workflow. The simulation demonstrates the correct data flow and privacy guarantees."
+    "secret_submissions": "5 real on-chain ZK secret-input transactions submitted via PBC TypeScript SDK. Each transaction creates encrypted shares for the 4 MPC engines. Transaction hashes verifiable on PBC testnet browser."
   },
 
   "test_summary": {
@@ -131,7 +134,7 @@
   },
 
   "future_work": [
-    "Integrate PBC TypeScript SDK for programmatic secret submission and computation trigger",
+    "Integrate PBC TypeScript SDK for programmatic computation trigger (start_computation action)",
     "Add Cardano result callback (write MPC result back to Cardano UTxO)",
     "Production deployment with real Profila user data (with consent)",
     "Multi-query support (run age_threshold and survey_match in parallel)",

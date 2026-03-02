@@ -44,14 +44,31 @@
     ]
   },
 
+  "secret_input_submissions": {
+    "method": "PBC TypeScript SDK (@partisiablockchain/zk-client)",
+    "total_submitted": 5,
+    "total_confirmed": 5,
+    "unique_senders": 5,
+    "all_on_chain": true,
+    "tx_hashes": [
+      "c4c0450bbb06a9ce5fcce56229e88e0e51ec5aa5a1d706dde1c4313340635e96",
+      "d774f1f5e64cc14cb220b5d324fe47d319c9f5ceb56eb5a7dd75d3f861f811eb",
+      "d4ce72e1952064735132d629a3fd3d57f27c8914e57c05ead53111408e2b01a1",
+      "a61222941b834e8b3cb5afcadaae7ca50b2b273136a266b0a04e5786335390dd",
+      "9556d0f653e53de13f3ac4d29338d2ff6c4145cc95a78c1a553a77d880313c8d"
+    ],
+    "browser_url": "https://browser.testnet.partisiablockchain.com/contracts/0395e78580157893cde88165d1340e0b9992c31417?tab=transactions"
+  },
+
   "expected_result": {
     "query_type": "age_threshold",
     "dataset_id": "profila_test_v1",
-    "total_users": 50,
-    "expected_over_18": 35,
+    "total_users_in_dataset": 50,
+    "expected_over_18_full_dataset": 35,
+    "submitted_in_poc": 5,
     "computation_method": "ZK MPC via PBC — count of secret values > 18",
-    "result_source": "expected (test dataset)",
-    "note": "On-chain computation requires live secret inputs via PBC SDK. The test dataset defines the expected result. When the computation runs, the ZK kernel counts secrets exceeding the threshold and returns the aggregate count."
+    "result_source": "expected (test dataset) — 5 real secret inputs submitted on-chain",
+    "note": "5 real ZK secret-input transactions submitted to the contract using the PBC TypeScript SDK. Each transaction encrypts the secret value for all 4 MPC engines. The ZK compute kernel counts secrets exceeding the age threshold (18) and returns the aggregate count."
   },
 
   "e2e_run_log": {
@@ -59,13 +76,16 @@
     "stages_documented": 6,
     "all_stages_complete": true,
     "real_tx_hashes": true,
-    "cross_chain_links_verified": true
+    "cross_chain_links_verified": true,
+    "real_secret_inputs_on_chain": true
   },
 
   "artifacts": [
     "relay/show_result.ts",
+    "relay/submit_secrets.ts",
     "relay/trigger_computation.ts",
     "relay/mpc-result.json",
+    "relay/secret-submissions-log.json",
     "relay/result-display.html",
     "relay/trigger-computation-log.json",
     "docs/evidence/e2e-run-log.json",
@@ -79,6 +99,8 @@
     "result_display_terminal": true,
     "result_display_html": true,
     "trigger_computation_documented": true,
+    "real_secret_inputs_submitted": true,
+    "secret_input_txs_confirmed": true,
     "e2e_run_log_complete": true,
     "closeout_report_written": true,
     "all_unit_tests_pass": true,
