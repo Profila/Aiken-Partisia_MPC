@@ -37,9 +37,6 @@ const query_age_threshold: ByteArray = "age_threshold"
 
 const query_survey_match: ByteArray = "survey_match"
 
-/// Seven days in milliseconds (7 * 24 * 60 * 60 * 1000)
-const seven_days_ms: Int = 604_800_000
-
 // ---------------------------------------------------------------------------
 // Validator
 // ---------------------------------------------------------------------------
@@ -54,9 +51,9 @@ validator profila_mpc {
     // Datum must be present
     expect Some(request) = datum
 
-    when redeemer is {
-      InitiateMPC -> validate_initiate_mpc(request, self)
-    }
+    // Single-variant redeemer — let binding is idiomatic Aiken
+    let InitiateMPC = redeemer
+    validate_initiate_mpc(request, self)
   }
 
   else(_) {
