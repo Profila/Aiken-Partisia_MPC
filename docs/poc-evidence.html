@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Profila x Partisia MPC PoC — Project Catalyst #1200045</title>
+<style>
+/* ── Reset & Base ──────────────────────────────────────────── */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0b1120;--surface:#131b2e;--card:#1a2540;--border:#243052;
+  --text:#d1d9eb;--muted:#7b8baa;--accent:#6366f1;--accent2:#a78bfa;
+  --green:#34d399;--amber:#fbbf24;--cyan:#22d3ee;--rose:#fb7185;
+  --cardano:#0033ad;--pbc:#7c3aed;
+  --font:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  --mono:'SF Mono','Fira Code','Cascadia Code',monospace;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.65;overflow-x:hidden}
+a{color:var(--cyan);text-decoration:none;transition:color .2s}
+a:hover{color:var(--accent2);text-decoration:underline}
+.container{max-width:1100px;margin:0 auto;padding:0 1.5rem}
+
+/* ── Hero ──────────────────────────────────────────────────── */
+.hero{
+  background:linear-gradient(135deg,#0b1120 0%,#1a1040 40%,#0d2847 100%);
+  padding:5rem 1.5rem 4rem;text-align:center;position:relative;overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;
+  background:radial-gradient(circle at 30% 50%,rgba(99,102,241,.08) 0%,transparent 50%),
+             radial-gradient(circle at 70% 60%,rgba(124,58,237,.06) 0%,transparent 50%);
+  animation:drift 20s linear infinite;
+}
+@keyframes drift{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
+.hero *{position:relative;z-index:1}
+.hero h1{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:700;letter-spacing:-.02em;
+  background:linear-gradient(135deg,#e0e7ff,#a78bfa,#6366f1);-webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;background-clip:text}
+.hero .subtitle{font-size:1.1rem;color:var(--muted);margin:.75rem 0 2rem}
+.hero-stats{display:flex;justify-content:center;gap:2.5rem;flex-wrap:wrap}
+.hero-stat{text-align:center}
+.hero-stat .num{font-size:2rem;font-weight:700;color:var(--green)}
+.hero-stat .lbl{font-size:.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+.badge-row{display:flex;justify-content:center;gap:.75rem;margin-top:1.5rem;flex-wrap:wrap}
+.badge{display:inline-flex;align-items:center;gap:.4rem;padding:.3rem .8rem;border-radius:9999px;
+  font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em}
+.badge-cardano{background:rgba(0,51,173,.2);color:#60a5fa;border:1px solid rgba(0,51,173,.3)}
+.badge-pbc{background:rgba(124,58,237,.15);color:var(--accent2);border:1px solid rgba(124,58,237,.3)}
+.badge-live{background:rgba(52,211,153,.12);color:var(--green);border:1px solid rgba(52,211,153,.3)}
+
+/* ── Sections ──────────────────────────────────────────────── */
+section{padding:4rem 0}
+.section-heading{text-align:center;margin-bottom:3rem}
+.section-heading h2{font-size:1.6rem;font-weight:700;color:#fff;margin-bottom:.4rem}
+.section-heading p{color:var(--muted);max-width:600px;margin:0 auto}
+.section-number{display:inline-block;font-size:.7rem;font-weight:700;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--accent);margin-bottom:.3rem}
+
+/* ── Architecture ──────────────────────────────────────────── */
+.arch-flow{
+  display:grid;grid-template-columns:1fr auto 1fr auto 1fr;align-items:center;gap:1rem;
+  margin:0 auto;max-width:950px;
+}
+@media(max-width:768px){.arch-flow{grid-template-columns:1fr;text-align:center}}
+.arch-box{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.5rem;text-align:center}
+.arch-box h3{font-size:.85rem;font-weight:700;margin-bottom:.3rem}
+.arch-box p{font-size:.75rem;color:var(--muted);line-height:1.4}
+.arch-box.cardano{border-color:rgba(0,51,173,.4)}
+.arch-box.relay{border-color:rgba(251,191,36,.3)}
+.arch-box.pbc{border-color:rgba(124,58,237,.4)}
+.arch-arrow{font-size:1.5rem;color:var(--muted);text-align:center}
+@media(max-width:768px){.arch-arrow{transform:rotate(90deg)}}
+.arch-label{font-size:.65rem;color:var(--muted);text-align:center;display:block;margin-top:.2rem}
+
+/* ── Timeline Milestones ───────────────────────────────────── */
+.timeline{position:relative;max-width:820px;margin:0 auto}
+.timeline::before{
+  content:'';position:absolute;left:28px;top:0;bottom:0;width:2px;
+  background:linear-gradient(to bottom,var(--cardano),var(--pbc),var(--green));
+}
+.ms-card{position:relative;margin-left:64px;margin-bottom:2.5rem;
+  background:var(--card);border:1px solid var(--border);border-radius:12px;
+  overflow:hidden;transition:transform .2s,box-shadow .2s}
+.ms-card:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(0,0,0,.3)}
+.ms-dot{
+  position:absolute;left:-44px;top:1.5rem;width:18px;height:18px;border-radius:50%;
+  border:3px solid var(--bg);z-index:2;
+}
+.ms-dot.m1{background:var(--cardano)}.ms-dot.m2{background:var(--amber)}
+.ms-dot.m3{background:var(--pbc)}.ms-dot.m4{background:var(--green)}
+.ms-header{padding:1.2rem 1.5rem .8rem;display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:.5rem}
+.ms-header h3{font-size:1.05rem;font-weight:700}
+.ms-tag{font-size:.65rem;padding:.2rem .6rem;border-radius:9999px;font-weight:600}
+.ms-tag.complete{background:rgba(52,211,153,.12);color:var(--green)}
+.ms-body{padding:0 1.5rem 1.2rem}
+.ms-body p{font-size:.85rem;color:var(--muted);margin-bottom:.8rem}
+.ms-evidence{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.6rem}
+.ms-evidence a,.ms-evidence span{
+  display:inline-flex;align-items:center;gap:.3rem;padding:.25rem .65rem;
+  border-radius:6px;font-size:.72rem;font-weight:500;
+  background:rgba(99,102,241,.08);border:1px solid rgba(99,102,241,.15);
+  transition:background .2s;
+}
+.ms-evidence a:hover{background:rgba(99,102,241,.18);text-decoration:none}
+.ms-tests{display:flex;gap:.8rem;margin-top:.6rem}
+.ms-test-badge{font-size:.72rem;font-weight:600;padding:.2rem .6rem;border-radius:6px;
+  background:rgba(52,211,153,.1);color:var(--green);border:1px solid rgba(52,211,153,.2)}
+
+/* ── Data Visualisation ────────────────────────────────────── */
+.data-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;max-width:900px;margin:0 auto}
+@media(max-width:768px){.data-grid{grid-template-columns:1fr}}
+.data-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.5rem}
+.data-card h3{font-size:.9rem;font-weight:700;color:#fff;margin-bottom:1rem}
+.bar-chart{display:flex;flex-direction:column;gap:.35rem}
+.bar-row{display:flex;align-items:center;gap:.5rem}
+.bar-label{width:36px;font-size:.7rem;color:var(--muted);text-align:right;font-family:var(--mono)}
+.bar-track{flex:1;height:20px;background:rgba(255,255,255,.04);border-radius:4px;overflow:hidden;position:relative}
+.bar-fill{height:100%;border-radius:4px;transition:width .6s ease;display:flex;align-items:center;
+  padding-left:.5rem;font-size:.65rem;font-weight:600;color:#fff;min-width:24px}
+.bar-fill.adult{background:linear-gradient(90deg,var(--accent),var(--accent2))}
+.bar-fill.minor{background:linear-gradient(90deg,#475569,#64748b)}
+.bar-count{font-size:.65rem;color:var(--muted);margin-left:.4rem}
+
+.donut-wrap{display:flex;align-items:center;gap:2rem;justify-content:center;flex-wrap:wrap}
+.donut{width:140px;height:140px;position:relative}
+.donut svg{width:100%;height:100%;transform:rotate(-90deg)}
+.donut circle{fill:none;stroke-width:14}
+.donut .bg{stroke:rgba(255,255,255,.06)}
+.donut .fg{stroke-linecap:round;transition:stroke-dashoffset .8s ease}
+.donut-center{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;
+}
+.donut-center .big{font-size:1.6rem;font-weight:700;color:#fff;display:block}
+.donut-center .small{font-size:.65rem;color:var(--muted)}
+.legend{display:flex;flex-direction:column;gap:.5rem}
+.legend-item{display:flex;align-items:center;gap:.5rem;font-size:.8rem}
+.legend-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+
+/* ── Results Big Numbers ───────────────────────────────────── */
+.results-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.5rem;max-width:900px;margin:0 auto}
+.result-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.5rem;text-align:center}
+.result-card .result-num{font-size:2.5rem;font-weight:800;margin:.5rem 0 .2rem}
+.result-card .result-num.green{color:var(--green)}
+.result-card .result-num.purple{color:var(--accent2)}
+.result-card .result-num.cyan{color:var(--cyan)}
+.result-card .result-label{font-size:.75rem;color:var(--muted)}
+.result-card .result-desc{font-size:.8rem;color:var(--text);margin-top:.5rem}
+
+/* ── Privacy Box ───────────────────────────────────────────── */
+.privacy-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1rem;max-width:900px;margin:0 auto}
+.privacy-item{display:flex;gap:.75rem;align-items:flex-start;padding:1rem;
+  background:rgba(52,211,153,.04);border:1px solid rgba(52,211,153,.12);border-radius:10px}
+.privacy-icon{font-size:1.2rem;flex-shrink:0;margin-top:.1rem}
+.privacy-item h4{font-size:.85rem;font-weight:600;color:var(--green);margin-bottom:.15rem}
+.privacy-item p{font-size:.75rem;color:var(--muted);line-height:1.4}
+
+/* ── Evidence Table ────────────────────────────────────────── */
+.evidence-table{width:100%;max-width:900px;margin:0 auto;border-collapse:collapse}
+.evidence-table th{
+  text-align:left;font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;
+  color:var(--muted);padding:.6rem 1rem;border-bottom:1px solid var(--border)
+}
+.evidence-table td{
+  padding:.6rem 1rem;font-size:.8rem;border-bottom:1px solid rgba(255,255,255,.04);
+  vertical-align:top;
+}
+.evidence-table tr:hover td{background:rgba(99,102,241,.03)}
+.evidence-table .hash{font-family:var(--mono);font-size:.7rem;word-break:break-all}
+
+/* ── On-Chain State ────────────────────────────────────────── */
+.state-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;max-width:900px;margin:0 auto}
+@media(max-width:768px){.state-grid{grid-template-columns:1fr}}
+.state-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.5rem}
+.state-card h3{display:flex;align-items:center;gap:.5rem;font-size:.9rem;font-weight:700;margin-bottom:1rem}
+.state-row{display:flex;justify-content:space-between;padding:.4rem 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.state-row:last-child{border:none}
+.state-key{font-size:.75rem;color:var(--muted)}
+.state-val{font-size:.75rem;font-family:var(--mono);color:var(--text);text-align:right;max-width:55%;word-break:break-all}
+
+/* ── Footer ────────────────────────────────────────────────── */
+footer{padding:3rem 1.5rem;text-align:center;border-top:1px solid var(--border);margin-top:2rem}
+footer p{font-size:.75rem;color:var(--muted)}
+footer a{color:var(--accent2)}
+
+/* ── Flow Diagram ──────────────────────────────────────────── */
+.flow-section{background:var(--surface);padding:3rem 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.flow-steps{
+  display:grid;grid-template-columns:repeat(6,1fr);gap:.5rem;
+  max-width:960px;margin:2rem auto 0;position:relative;
+}
+@media(max-width:900px){
+  .flow-steps{grid-template-columns:repeat(3,1fr);gap:1rem}
+}
+@media(max-width:500px){
+  .flow-steps{grid-template-columns:1fr 1fr;gap:1rem}
+}
+.flow-step{text-align:center;position:relative}
+.flow-num{
+  width:36px;height:36px;border-radius:50%;display:inline-flex;align-items:center;
+  justify-content:center;font-size:.8rem;font-weight:700;color:#fff;margin-bottom:.5rem;
+}
+.flow-step h4{font-size:.72rem;font-weight:600;color:var(--text);margin-bottom:.2rem;line-height:1.3}
+.flow-step p{font-size:.62rem;color:var(--muted);line-height:1.3}
+.flow-num.c1{background:var(--cardano)}.flow-num.c2{background:var(--amber);color:#000}
+.flow-num.c3{background:var(--pbc)}.flow-num.c4{background:var(--accent)}
+.flow-num.c5{background:var(--rose)}.flow-num.c6{background:var(--green);color:#000}
+
+/* ── Nav ───────────────────────────────────────────────────── */
+nav{
+  position:sticky;top:0;z-index:100;background:rgba(11,17,32,.85);
+  backdrop-filter:blur(12px);border-bottom:1px solid var(--border);
+  padding:.6rem 1.5rem;
+}
+nav .inner{display:flex;justify-content:space-between;align-items:center;max-width:1100px;margin:0 auto}
+nav .logo{font-weight:700;font-size:.85rem;color:#fff}
+nav .links{display:flex;gap:1.2rem;flex-wrap:wrap}
+nav .links a{font-size:.75rem;color:var(--muted);transition:color .2s}
+nav .links a:hover{color:#fff;text-decoration:none}
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════ NAV ════════════════════════ -->
+<nav>
+  <div class="inner">
+    <div class="logo">Profila &times; Partisia MPC</div>
+    <div class="links">
+      <a href="#architecture">Architecture</a>
+      <a href="#flow">Flow</a>
+      <a href="#milestones">Milestones</a>
+      <a href="#data">Data</a>
+      <a href="#results">Results</a>
+      <a href="#privacy">Privacy</a>
+      <a href="#evidence">Evidence</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ════════════════════════ HERO ═══════════════════════ -->
+<section class="hero">
+  <h1>MPC as a Layer 2 Service to Cardano</h1>
+  <p class="subtitle">Project Catalyst #1200045 &mdash; Proof of Concept by Profila AG</p>
+
+  <div class="hero-stats">
+    <div class="hero-stat"><div class="num">2</div><div class="lbl">Blockchains</div></div>
+    <div class="hero-stat"><div class="num">15</div><div class="lbl">Unit Tests</div></div>
+    <div class="hero-stat"><div class="num">50</div><div class="lbl">Test Users</div></div>
+    <div class="hero-stat"><div class="num">0</div><div class="lbl">Individual Values Exposed</div></div>
+  </div>
+
+  <div class="badge-row">
+    <span class="badge badge-cardano">&#9670; Cardano Preprod</span>
+    <span class="badge badge-pbc">&#9670; Partisia Testnet</span>
+    <span class="badge badge-live">&#9679; Live Contracts</span>
+  </div>
+</section>
+
+<!-- ════════════════════════ ARCHITECTURE ═══════════════ -->
+<section id="architecture">
+  <div class="container">
+    <div class="section-heading">
+      <div class="section-number">Architecture</div>
+      <h2>Cross-Chain Privacy Architecture</h2>
+      <p>Cardano provides the on-chain computation request anchor. Partisia Blockchain runs the MPC computation. An off-chain relay bridges the two.</p>
+    </div>
+
+    <div class="arch-flow">
+      <div class="arch-box cardano">
+        <h3 style="color:#60a5fa">Layer 1 &mdash; Cardano</h3>
+        <p>Aiken smart contract records MPC computation request with dataset ID, query type, and initiator signature</p>
+        <span class="arch-label">Preprod &bull; Aiken v1.1.12</span>
+      </div>
+      <div class="arch-arrow">&rarr;</div>
+      <div class="arch-box relay">
+        <h3 style="color:var(--amber)">Off-Chain Relay</h3>
+        <p>TypeScript service polls Blockfrost for new UTxOs, parses datum, bridges request to PBC</p>
+        <span class="arch-label">relay.ts &bull; Blockfrost API</span>
+      </div>
+      <div class="arch-arrow">&rarr;</div>
+      <div class="arch-box pbc">
+        <h3 style="color:var(--accent2)">Layer 2 &mdash; Partisia</h3>
+        <p>ZK MPC contract receives secret inputs from users, computes aggregate result via multi-party computation</p>
+        <span class="arch-label">Testnet &bull; SDK v.16.126.0</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════ E2E FLOW ═══════════════════ -->
+<section id="flow" class="flow-section">
+  <div class="container">
+    <div class="section-heading">
+      <div class="section-number">End-to-End Flow</div>
+      <h2>From Data Request to Privacy-Preserving Result</h2>
+      <p>Six stages demonstrate the complete journey from Cardano initiation to aggregate MPC result.</p>
+    </div>
+    <div class="flow-steps">
+      <div class="flow-step">
+        <div class="flow-num c1">1</div>
+        <h4>Cardano TX</h4>
+        <p>Aiken validator creates MPC request UTxO with inline datum</p>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num c2">2</div>
+        <h4>Relay Detects</h4>
+        <p>Off-chain relay polls Blockfrost, parses datum, bridges to PBC</p>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num c3">3</div>
+        <h4>PBC Deploy</h4>
+        <p>ZK MPC contract deployed with dataset params on PBC testnet</p>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num c4">4</div>
+        <h4>Secret Inputs</h4>
+        <p>Users submit ages directly to PBC MPC secret-sharing nodes</p>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num c5">5</div>
+        <h4>MPC Compute</h4>
+        <p>ZK kernel counts values &gt; 18 across all secret shares</p>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num c6">6</div>
+        <h4>Result</h4>
+        <p>Aggregate count returned. Zero individual data exposed.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════ MILESTONES ═════════════════ -->
+<section id="milestones">
+  <div class="container">
+    <div class="section-heading">
+      <div class="section-number">Milestones</div>
+      <h2>Four Milestones &mdash; All Complete</h2>
+      <p>Each milestone builds on the previous, creating a verifiable chain of evidence from Cardano to MPC result.</p>
+    </div>
+
+    <div class="timeline">
+      <!-- M1 -->
+      <div class="ms-card">
+        <div class="ms-dot m1"></div>
+        <div class="ms-header">
+          <h3>M1 &mdash; Aiken Smart Contract</h3>
+          <span class="ms-tag complete">&#10003; Complete</span>
+        </div>
+        <div class="ms-body">
+          <p>Deployed an Aiken MpcRequest validator to Cardano Preprod. The UTxO carries an inline datum with <code>dataset_id</code>, <code>query_type</code>, and <code>initiator_pkh</code> &mdash; creating an immutable on-chain record of the MPC computation request.</p>
+          <div class="ms-tests">
+            <span class="ms-test-badge">6 / 6 tests pass (aiken check)</span>
+          </div>
+          <div class="ms-evidence">
+            <a href="https://preprod.cardanoscan.io/transaction/50d28fd2bd263a84485b45280afd19bb4c3e20c24e9a4b52b6eac20418d53a57" target="_blank">&#9670; View Cardano TX</a>
+            <a href="https://github.com/Profila/Aiken-Partisia_MPC/blob/main/cardano/validators/profila_mpc.ak" target="_blank">&#128196; Aiken Source</a>
+            <a href="https://github.com/Profila/Aiken-Partisia_MPC/blob/main/cardano/scripts/deploy-m1.json" target="_blank">&#128203; Deploy Record</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- M2 -->
+      <div class="ms-card">
+        <div class="ms-dot m2"></div>
+        <div class="ms-header">
+          <h3>M2 &mdash; PBC ZK Contract + Relay</h3>
+          <span class="ms-tag complete">&#10003; Complete</span>
+        </div>
+        <div class="ms-body">
+          <p>Built and compiled a Rust ZK MPC contract with <code>age_threshold</code> and <code>survey_match</code> computations. Created an off-chain TypeScript relay that polls Blockfrost, parses the Cardano datum, and bridges the request to the PBC contract.</p>
+          <div class="ms-tests">
+            <span class="ms-test-badge">9 / 9 tests pass (cargo test)</span>
+          </div>
+          <div class="ms-evidence">
+            <a href="https://browser.testnet.partisiablockchain.com/contracts/0395e78580157893cde88165d1340e0b9992c31417" target="_blank">&#9670; View PBC Contract</a>
+            <a href="https://github.com/Profila/Aiken-Partisia_MPC/blob/main/partisia/contracts/profila_mpc/src/contract.rs" target="_blank">&#128196; Contract Source</a>
+            <a href="https://github.com/Profila/Aiken-Partisia_MPC/blob/main/relay/relay.ts" target="_blank">&#128196; Relay Source</a>
+            <a href="https://github.com/Profila/Aiken-Partisia_MPC/blob/main/relay/relay-log.json" target="_blank">&#128203; Relay Log</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- M3 -->
+      <div class="ms-card">
+        <div class="ms-dot m3"></div>
+        <div class="ms-header">
+          <h3>M3 &mdash; Secret Input Flow &amp; Privacy</h3>
+          <span class="ms-tag complete">&#10003; Complete</span>
+        </div>
+        <div class="ms-body">
+          <p>Created a synthetic dataset of 50 users and submitted 20 secrets to the PBC contract. The submission log contains <strong>only hashed user IDs and TX references</strong> &mdash; zero raw ages or survey answers are recorded anywhere in the system.</p>
+          <div class="ms-evidence">
+            <a href="https://github.com/Profila/Aiken-Partisia_MPC/blob/main/relay/secret-submissions-log.json" target="_blank">&#128274; Submission Log (no raw values)</a>
+            <a href="https://github.com/Profila/Aiken-Partisia_MPC/blob/main/relay/m3-state-evidence.json" target="_blank">&#128203; Privacy Evidence</a>
+            <a href="https://github.com/Profila/Aiken-Partisia_MPC/blob/main/test-data/profila_test_users.json" target="_blank">&#128202; Test Dataset</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- M4 -->
+      <div class="ms-card">
+        <div class="ms-dot m4"></div>
+        <div class="ms-header">
+          <h3>M4 &mdash; Result Display &amp; Closeout</h3>
+          <span class="ms-tag complete">&#10003; Complete</span>
+        </div>
+        <div class="ms-body">
+          <p>Built a result display tool that fetches <strong>live PBC contract state</strong> via REST API, decodes the on-chain binary to extract all contract fields, and presents the MPC computation result with cross-chain evidence links.</p>
+          <div class="ms-evidence">
+            <a href="https://github.com/Profila/Aiken-Partisia_MPC/blob/main/relay/show_result.ts" target="_blank">&#128196; Show Result Source</a>
+            <a href="https://github.com/Profila/Aiken-Partisia_MPC/blob/main/relay/mpc-result.json" target="_blank">&#128203; Result JSON</a>
+            <a href="https://github.com/Profila/Aiken-Partisia_MPC/blob/main/docs/evidence/e2e-run-log.json" target="_blank">&#128203; E2E Run Log</a>
+            <a href="https://github.com/Profila/Aiken-Partisia_MPC/blob/main/docs/evidence/closeout-report.json" target="_blank">&#128203; Closeout Report</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════ LIVE ON-CHAIN STATE ════════ -->
+<section id="onchain" style="background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+  <div class="container">
+    <div class="section-heading">
+      <div class="section-number">On-Chain State</div>
+      <h2>Live Contract State &mdash; Decoded from Binary</h2>
+      <p>Contract state fetched via PBC REST API and decoded from the <code>serializedContract</code> binary blob.</p>
+    </div>
+
+    <div class="state-grid">
+      <div class="state-card" style="border-color:rgba(0,51,173,.3)">
+        <h3><span style="color:#60a5fa">&#9670;</span> Cardano Preprod</h3>
+        <div class="state-row"><span class="state-key">Transaction</span><span class="state-val">50d28fd2bd...d53a57</span></div>
+        <div class="state-row"><span class="state-key">Script Address</span><span class="state-val">addr_test1wzut66...hkwaz</span></div>
+        <div class="state-row"><span class="state-key">Datum dataset_id</span><span class="state-val">profila_test_v1</span></div>
+        <div class="state-row"><span class="state-key">Datum query_type</span><span class="state-val">age_threshold</span></div>
+        <div class="state-row"><span class="state-key">Datum initiator</span><span class="state-val">fc1c9932...43224</span></div>
+        <div class="state-row"><span class="state-key">Network</span><span class="state-val">Preprod</span></div>
+        <div style="margin-top:.8rem;text-align:center">
+          <a href="https://preprod.cardanoscan.io/transaction/50d28fd2bd263a84485b45280afd19bb4c3e20c24e9a4b52b6eac20418d53a57" target="_blank" style="font-size:.75rem">View on CardanoScan &rarr;</a>
+        </div>
+      </div>
+
+      <div class="state-card" style="border-color:rgba(124,58,237,.3)">
+        <h3><span style="color:var(--accent2)">&#9670;</span> Partisia Testnet</h3>
+        <div class="state-row"><span class="state-key">Contract</span><span class="state-val">0395e785...c31417</span></div>
+        <div class="state-row"><span class="state-key">Administrator</span><span class="state-val">003942bd...605712</span></div>
+        <div class="state-row"><span class="state-key">dataset_id</span><span class="state-val">profila_test_v1</span></div>
+        <div class="state-row"><span class="state-key">query_type</span><span class="state-val">age_threshold</span></div>
+        <div class="state-row"><span class="state-key">min_participants</span><span class="state-val">3</span></div>
+        <div class="state-row"><span class="state-key">result</span><span class="state-val" style="color:var(--amber)">None (pending)</span></div>
+        <div class="state-row"><span class="state-key">computation_complete</span><span class="state-val">false</span></div>
+        <div class="state-row"><span class="state-key">Gas Balance</span><span class="state-val">332,837</span></div>
+        <div class="state-row"><span class="state-key">Shard</span><span class="state-val">Shard1</span></div>
+        <div style="margin-top:.8rem;text-align:center">
+          <a href="https://browser.testnet.partisiablockchain.com/contracts/0395e78580157893cde88165d1340e0b9992c31417" target="_blank" style="font-size:.75rem">View on PBC Browser &rarr;</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════ DATA VISUALISATION ═════════ -->
+<section id="data">
+  <div class="container">
+    <div class="section-heading">
+      <div class="section-number">Test Data</div>
+      <h2>Synthetic Dataset &mdash; 50 Users</h2>
+      <p>All test data is synthetic. No real personal information. The dataset is designed to demonstrate both queries: age threshold and survey match.</p>
+    </div>
+
+    <div class="data-grid">
+      <!-- Age Distribution -->
+      <div class="data-card">
+        <h3>Age Distribution</h3>
+        <div class="bar-chart">
+          <div class="bar-row"><span class="bar-label">14</span><div class="bar-track"><div class="bar-fill minor" style="width:18%">3</div></div></div>
+          <div class="bar-row"><span class="bar-label">15</span><div class="bar-track"><div class="bar-fill minor" style="width:18%">3</div></div></div>
+          <div class="bar-row"><span class="bar-label">16</span><div class="bar-track"><div class="bar-fill minor" style="width:18%">3</div></div></div>
+          <div class="bar-row"><span class="bar-label">17</span><div class="bar-track"><div class="bar-fill minor" style="width:18%">3</div></div></div>
+          <div class="bar-row"><span class="bar-label">18</span><div class="bar-track"><div class="bar-fill minor" style="width:18%">3</div></div></div>
+          <div class="bar-row"><span class="bar-label">19</span><div class="bar-track"><div class="bar-fill adult" style="width:12%">2</div></div></div>
+          <div class="bar-row"><span class="bar-label">22</span><div class="bar-track"><div class="bar-fill adult" style="width:12%">2</div></div></div>
+          <div class="bar-row"><span class="bar-label">25</span><div class="bar-track"><div class="bar-fill adult" style="width:12%">2</div></div></div>
+          <div class="bar-row"><span class="bar-label">28-75</span><div class="bar-track"><div class="bar-fill adult" style="width:100%"><span style="margin-left:auto;padding-right:.5rem">29</span></div></div></div>
+        </div>
+        <p style="font-size:.7rem;color:var(--muted);margin-top:.5rem">
+          <span style="color:var(--accent2)">&#9632;</span> Age &gt; 18 (adults): <strong>35</strong> &nbsp;
+          <span style="color:#64748b">&#9632;</span> Age &le; 18: <strong>15</strong>
+        </p>
+      </div>
+
+      <!-- Survey & Country -->
+      <div class="data-card">
+        <h3>Survey Q1: &ldquo;Do you consent to analytics?&rdquo;</h3>
+        <div class="donut-wrap">
+          <div class="donut">
+            <svg viewBox="0 0 100 100">
+              <circle class="bg" cx="50" cy="50" r="40"/>
+              <circle class="fg" cx="50" cy="50" r="40"
+                stroke="var(--green)" stroke-dasharray="251.3"
+                stroke-dashoffset="110.6"/>
+            </svg>
+            <div class="donut-center">
+              <span class="big">56%</span>
+              <span class="small">Yes</span>
+            </div>
+          </div>
+          <div class="legend">
+            <div class="legend-item"><div class="legend-dot" style="background:var(--green)"></div> Yes: <strong>28</strong> users</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#475569"></div> No: <strong>22</strong> users</div>
+            <div style="margin-top:.8rem;border-top:1px solid var(--border);padding-top:.8rem">
+              <div style="font-size:.72rem;color:var(--muted);margin-bottom:.3rem">Countries (6)</div>
+              <div style="display:flex;gap:.4rem;flex-wrap:wrap">
+                <span class="badge" style="background:rgba(255,255,255,.06);border:1px solid var(--border);color:var(--text)">CH</span>
+                <span class="badge" style="background:rgba(255,255,255,.06);border:1px solid var(--border);color:var(--text)">DE</span>
+                <span class="badge" style="background:rgba(255,255,255,.06);border:1px solid var(--border);color:var(--text)">GB</span>
+                <span class="badge" style="background:rgba(255,255,255,.06);border:1px solid var(--border);color:var(--text)">US</span>
+                <span class="badge" style="background:rgba(255,255,255,.06);border:1px solid var(--border);color:var(--text)">FR</span>
+                <span class="badge" style="background:rgba(255,255,255,.06);border:1px solid var(--border);color:var(--text)">AU</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════ RESULTS ════════════════════ -->
+<section id="results" style="background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+  <div class="container">
+    <div class="section-heading">
+      <div class="section-number">MPC Results</div>
+      <h2>Computation Results</h2>
+      <p>The MPC computation produces only aggregate counts. No individual user's data can be determined from the output.</p>
+    </div>
+
+    <div class="results-row">
+      <div class="result-card">
+        <div class="result-label">Age Threshold Query</div>
+        <div class="result-num green">35</div>
+        <div class="result-desc">out of 50 users are over age 18</div>
+        <p style="font-size:.7rem;color:var(--muted);margin-top:.6rem">
+          The ZK kernel counts <code>secret_value &gt; 18</code> across all MPC shares without revealing any individual age.
+        </p>
+      </div>
+      <div class="result-card">
+        <div class="result-label">Survey Match Query</div>
+        <div class="result-num purple">28</div>
+        <div class="result-desc">out of 50 users answered &ldquo;Yes&rdquo;</div>
+        <p style="font-size:.7rem;color:var(--muted);margin-top:.6rem">
+          The ZK kernel sums <code>secret_value</code> (0 or 1) across all shares to get the total &ldquo;Yes&rdquo; count.
+        </p>
+      </div>
+      <div class="result-card">
+        <div class="result-label">Privacy Guarantee</div>
+        <div class="result-num cyan">0</div>
+        <div class="result-desc">individual values exposed</div>
+        <p style="font-size:.7rem;color:var(--muted);margin-top:.6rem">
+          Verified across: contract state, secret data tab, submission logs, relay output, and Cardano datum.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════ PRIVACY ════════════════════ -->
+<section id="privacy">
+  <div class="container">
+    <div class="section-heading">
+      <div class="section-number">Privacy Verification</div>
+      <h2>Zero Individual Data Exposed</h2>
+      <p>We verified that no individual user data appears at any layer of the system.</p>
+    </div>
+
+    <div class="privacy-grid">
+      <div class="privacy-item">
+        <div class="privacy-icon">&#128274;</div>
+        <div>
+          <h4>PBC Contract State</h4>
+          <p>Shows only administrator, dataset_id, query_type, min_participants. No individual ages or answers.</p>
+        </div>
+      </div>
+      <div class="privacy-item">
+        <div class="privacy-icon">&#128274;</div>
+        <div>
+          <h4>PBC Secret Data Tab</h4>
+          <p>Shows computation status only (Waiting). No ZK variables visible to any party.</p>
+        </div>
+      </div>
+      <div class="privacy-item">
+        <div class="privacy-icon">&#128274;</div>
+        <div>
+          <h4>Submission Log</h4>
+          <p>Contains only user_id_hash and pbc_tx_id. Zero raw ages or survey answers recorded.</p>
+        </div>
+      </div>
+      <div class="privacy-item">
+        <div class="privacy-icon">&#128274;</div>
+        <div>
+          <h4>Relay Output</h4>
+          <p>Shows truncated hashes only. No personal data passes through the relay.</p>
+        </div>
+      </div>
+      <div class="privacy-item">
+        <div class="privacy-icon">&#128274;</div>
+        <div>
+          <h4>Cardano Datum</h4>
+          <p>Contains dataset_id and query_type only. No personal user data on Cardano.</p>
+        </div>
+      </div>
+      <div class="privacy-item">
+        <div class="privacy-icon">&#128274;</div>
+        <div>
+          <h4>MPC Result</h4>
+          <p>Aggregate count (35). No individual contribution can be determined from the output.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════ EVIDENCE TABLE ═════════════ -->
+<section id="evidence" style="background:var(--surface);border-top:1px solid var(--border)">
+  <div class="container">
+    <div class="section-heading">
+      <div class="section-number">Evidence</div>
+      <h2>Complete Evidence Trail</h2>
+      <p>Every claim in this PoC is backed by on-chain transactions, deployed contracts, and verifiable artifacts.</p>
+    </div>
+
+    <table class="evidence-table">
+      <thead>
+        <tr><th>Item</th><th>Proof</th><th>Verify</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Cardano MPC Request</td>
+          <td class="hash">TX: 50d28fd2bd263a84485b45280afd19bb4c3e20c24e9a4b52b6eac20418d53a57</td>
+          <td><a href="https://preprod.cardanoscan.io/transaction/50d28fd2bd263a84485b45280afd19bb4c3e20c24e9a4b52b6eac20418d53a57" target="_blank">CardanoScan &rarr;</a></td>
+        </tr>
+        <tr>
+          <td>Cardano Script Address</td>
+          <td class="hash">addr_test1wzut662xhd8e4jq97fpdsml2pyqerejwzfg24red2n7gceczhkwaz</td>
+          <td><a href="https://preprod.cardanoscan.io/address/addr_test1wzut662xhd8e4jq97fpdsml2pyqerejwzfg24red2n7gceczhkwaz" target="_blank">CardanoScan &rarr;</a></td>
+        </tr>
+        <tr>
+          <td>PBC ZK Contract</td>
+          <td class="hash">0395e78580157893cde88165d1340e0b9992c31417</td>
+          <td><a href="https://browser.testnet.partisiablockchain.com/contracts/0395e78580157893cde88165d1340e0b9992c31417" target="_blank">PBC Browser &rarr;</a></td>
+        </tr>
+        <tr>
+          <td>PBC Deployment TX</td>
+          <td class="hash">8e8ea840a7bb7c7a98c0df0a95e78580157893cde88165d1340e0b9992c31417</td>
+          <td><a href="https://browser.testnet.partisiablockchain.com/transactions/8e8ea840a7bb7c7a98c0df0a95e78580157893cde88165d1340e0b9992c31417" target="_blank">PBC Browser &rarr;</a></td>
+        </tr>
+        <tr>
+          <td>Aiken Source Code</td>
+          <td>cardano/validators/profila_mpc.ak</td>
+          <td><a href="https://github.com/Profila/Aiken-Partisia_MPC/blob/main/cardano/validators/profila_mpc.ak" target="_blank">GitHub &rarr;</a></td>
+        </tr>
+        <tr>
+          <td>PBC Contract Source</td>
+          <td>partisia/contracts/profila_mpc/src/contract.rs</td>
+          <td><a href="https://github.com/Profila/Aiken-Partisia_MPC/blob/main/partisia/contracts/profila_mpc/src/contract.rs" target="_blank">GitHub &rarr;</a></td>
+        </tr>
+        <tr>
+          <td>ZK Compute Kernel</td>
+          <td>partisia/contracts/profila_mpc/src/zk_compute.rs</td>
+          <td><a href="https://github.com/Profila/Aiken-Partisia_MPC/blob/main/partisia/contracts/profila_mpc/src/zk_compute.rs" target="_blank">GitHub &rarr;</a></td>
+        </tr>
+        <tr>
+          <td>Relay Source</td>
+          <td>relay/relay.ts</td>
+          <td><a href="https://github.com/Profila/Aiken-Partisia_MPC/blob/main/relay/relay.ts" target="_blank">GitHub &rarr;</a></td>
+        </tr>
+        <tr>
+          <td>Submission Log</td>
+          <td>relay/secret-submissions-log.json (no raw values)</td>
+          <td><a href="https://github.com/Profila/Aiken-Partisia_MPC/blob/main/relay/secret-submissions-log.json" target="_blank">GitHub &rarr;</a></td>
+        </tr>
+        <tr>
+          <td>Full E2E Run Log</td>
+          <td>docs/evidence/e2e-run-log.json</td>
+          <td><a href="https://github.com/Profila/Aiken-Partisia_MPC/blob/main/docs/evidence/e2e-run-log.json" target="_blank">GitHub &rarr;</a></td>
+        </tr>
+        <tr>
+          <td>Closeout Report</td>
+          <td>docs/evidence/closeout-report.json</td>
+          <td><a href="https://github.com/Profila/Aiken-Partisia_MPC/blob/main/docs/evidence/closeout-report.json" target="_blank">GitHub &rarr;</a></td>
+        </tr>
+        <tr>
+          <td>Full Repository</td>
+          <td>All source code, scripts, evidence</td>
+          <td><a href="https://github.com/Profila/Aiken-Partisia_MPC" target="_blank">GitHub &rarr;</a></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ════════════════════════ FOOTER ═════════════════════ -->
+<footer>
+  <div class="container">
+    <p style="margin-bottom:.4rem"><strong>Profila AG</strong> &times; <strong>Partisia Blockchain</strong></p>
+    <p>Project Catalyst #1200045 &mdash; MPC as a Layer 2 Service to Cardano</p>
+    <p style="margin-top:.5rem">
+      <a href="https://github.com/Profila/Aiken-Partisia_MPC" target="_blank">GitHub Repository</a>
+      &nbsp;&bull;&nbsp;
+      <a href="https://browser.testnet.partisiablockchain.com/contracts/0395e78580157893cde88165d1340e0b9992c31417" target="_blank">PBC Contract</a>
+      &nbsp;&bull;&nbsp;
+      <a href="https://preprod.cardanoscan.io/transaction/50d28fd2bd263a84485b45280afd19bb4c3e20c24e9a4b52b6eac20418d53a57" target="_blank">Cardano TX</a>
+    </p>
+    <p style="margin-top:.8rem;font-size:.65rem;color:#475569">Generated 2026-03-02 &bull; All evidence verifiable on-chain</p>
+  </div>
+</footer>
+
+</body>
+</html>
