@@ -245,7 +245,7 @@ nav .links a:hover{color:#fff;text-decoration:none}
   <div class="hero-stats">
     <div class="hero-stat"><div class="num">2</div><div class="lbl">Blockchains</div></div>
     <div class="hero-stat"><div class="num">15</div><div class="lbl">Unit Tests</div></div>
-    <div class="hero-stat"><div class="num">50</div><div class="lbl">Test Users</div></div>
+    <div class="hero-stat"><div class="num">5</div><div class="lbl">On-Chain Secret TXs</div></div>
     <div class="hero-stat"><div class="num">0</div><div class="lbl">Individual Values Exposed</div></div>
   </div>
 
@@ -314,7 +314,7 @@ nav .links a:hover{color:#fff;text-decoration:none}
       <div class="flow-step">
         <div class="flow-num c4">4</div>
         <h4>Secret Inputs</h4>
-        <p>Users submit ages directly to PBC MPC secret-sharing nodes</p>
+        <p>5 real ZK secret-input TXs submitted via PBC TypeScript SDK to 4 MPC engines</p>
       </div>
       <div class="flow-step">
         <div class="flow-num c5">5</div>
@@ -406,9 +406,10 @@ nav .links a:hover{color:#fff;text-decoration:none}
           <span class="ms-tag complete">&#10003; Complete</span>
         </div>
         <div class="ms-body">
-          <p>Built a result display tool that fetches <strong>live PBC contract state</strong> via REST API, decodes the on-chain binary to extract all contract fields, and presents the MPC computation result with cross-chain evidence links.</p>
+          <p>Built a result display tool that fetches <strong>live PBC contract state</strong> via REST API, decodes the on-chain binary to extract all contract fields, and presents the MPC computation result with cross-chain evidence links. <strong>5 real ZK secret-input transactions</strong> submitted via the PBC TypeScript SDK are verifiable on-chain.</p>
           <div class="ms-evidence">
             <a href="https://github.com/Profila/Aiken-Partisia_MPC/blob/main/relay/show_result.ts" target="_blank">&#128196; Show Result Source</a>
+            <a href="https://github.com/Profila/Aiken-Partisia_MPC/blob/main/relay/submit_secrets.ts" target="_blank">&#128196; Submit Secrets (SDK)</a>
             <a href="https://github.com/Profila/Aiken-Partisia_MPC/blob/main/relay/mpc-result.json" target="_blank">&#128203; Result JSON</a>
             <a href="https://github.com/Profila/Aiken-Partisia_MPC/blob/main/docs/evidence/e2e-run-log.json" target="_blank">&#128203; E2E Run Log</a>
             <a href="https://github.com/Profila/Aiken-Partisia_MPC/blob/main/docs/evidence/closeout-report.json" target="_blank">&#128203; Closeout Report</a>
@@ -542,17 +543,18 @@ nav .links a:hover{color:#fff;text-decoration:none}
 
     <div class="results-row">
       <div class="result-card">
-        <div class="result-label">Age Threshold Query</div>
+        <div class="result-label">Age Threshold Query (Expected)</div>
         <div class="result-num green">35</div>
-        <div class="result-desc">out of 50 users are over age 18</div>
+        <div class="result-desc">of 50 users over age 18 in full dataset</div>
         <p style="font-size:.7rem;color:var(--muted);margin-top:.6rem">
           The ZK kernel counts <code>secret_value &gt; 18</code> across all MPC shares without revealing any individual age.
+          <strong>5 real secrets submitted on-chain</strong> via PBC TypeScript SDK &mdash; computation pending trigger.
         </p>
       </div>
       <div class="result-card">
-        <div class="result-label">Survey Match Query</div>
+        <div class="result-label">Survey Match Query (Expected)</div>
         <div class="result-num purple">28</div>
-        <div class="result-desc">out of 50 users answered &ldquo;Yes&rdquo;</div>
+        <div class="result-desc">of 50 users answered &ldquo;Yes&rdquo; in full dataset</div>
         <p style="font-size:.7rem;color:var(--muted);margin-top:.6rem">
           The ZK kernel sums <code>secret_value</code> (0 or 1) across all shares to get the total &ldquo;Yes&rdquo; count.
         </p>
@@ -563,6 +565,7 @@ nav .links a:hover{color:#fff;text-decoration:none}
         <div class="result-desc">individual values exposed</div>
         <p style="font-size:.7rem;color:var(--muted);margin-top:.6rem">
           Verified across: contract state, secret data tab, submission logs, relay output, and Cardano datum.
+          All 5 submitted secrets encrypted for 4 MPC engines &mdash; zero raw values on-chain.
         </p>
       </div>
     </div>
@@ -660,6 +663,31 @@ nav .links a:hover{color:#fff;text-decoration:none}
           <td><a href="https://browser.testnet.partisiablockchain.com/transactions/8e8ea840a7bb7c7a98c0df0a95e78580157893cde88165d1340e0b9992c31417" target="_blank">PBC Browser &rarr;</a></td>
         </tr>
         <tr>
+          <td>Secret Input TX #1</td>
+          <td class="hash">c4c0450bbb06a9ce5fcce56229e88e0e51ec5aa5a1d706dde1c4313340635e96</td>
+          <td><a href="https://browser.testnet.partisiablockchain.com/transactions/c4c0450bbb06a9ce5fcce56229e88e0e51ec5aa5a1d706dde1c4313340635e96" target="_blank">PBC Browser &rarr;</a></td>
+        </tr>
+        <tr>
+          <td>Secret Input TX #2</td>
+          <td class="hash">d774f1f5e64cc14cb220b5d324fe47d319c9f5ceb56eb5a7dd75d3f861f811eb</td>
+          <td><a href="https://browser.testnet.partisiablockchain.com/transactions/d774f1f5e64cc14cb220b5d324fe47d319c9f5ceb56eb5a7dd75d3f861f811eb" target="_blank">PBC Browser &rarr;</a></td>
+        </tr>
+        <tr>
+          <td>Secret Input TX #3</td>
+          <td class="hash">d4ce72e1952064735132d629a3fd3d57f27c8914e57c05ead53111408e2b01a1</td>
+          <td><a href="https://browser.testnet.partisiablockchain.com/transactions/d4ce72e1952064735132d629a3fd3d57f27c8914e57c05ead53111408e2b01a1" target="_blank">PBC Browser &rarr;</a></td>
+        </tr>
+        <tr>
+          <td>Secret Input TX #4</td>
+          <td class="hash">a61222941b834e8b3cb5afcadaae7ca50b2b273136a266b0a04e5786335390dd</td>
+          <td><a href="https://browser.testnet.partisiablockchain.com/transactions/a61222941b834e8b3cb5afcadaae7ca50b2b273136a266b0a04e5786335390dd" target="_blank">PBC Browser &rarr;</a></td>
+        </tr>
+        <tr>
+          <td>Secret Input TX #5</td>
+          <td class="hash">9556d0f653e53de13f3ac4d29338d2ff6c4145cc95a78c1a553a77d880313c8d</td>
+          <td><a href="https://browser.testnet.partisiablockchain.com/transactions/9556d0f653e53de13f3ac4d29338d2ff6c4145cc95a78c1a553a77d880313c8d" target="_blank">PBC Browser &rarr;</a></td>
+        </tr>
+        <tr>
           <td>Aiken Source Code</td>
           <td>cardano/validators/profila_mpc.ak</td>
           <td><a href="https://github.com/Profila/Aiken-Partisia_MPC/blob/main/cardano/validators/profila_mpc.ak" target="_blank">GitHub &rarr;</a></td>
@@ -680,6 +708,21 @@ nav .links a:hover{color:#fff;text-decoration:none}
           <td><a href="https://github.com/Profila/Aiken-Partisia_MPC/blob/main/relay/relay.ts" target="_blank">GitHub &rarr;</a></td>
         </tr>
         <tr>
+          <td>Secret Submission Script</td>
+          <td>relay/submit_secrets.ts &mdash; PBC TypeScript SDK integration</td>
+          <td><a href="https://github.com/Profila/Aiken-Partisia_MPC/blob/main/relay/submit_secrets.ts" target="_blank">GitHub &rarr;</a></td>
+        </tr>
+        <tr>
+          <td>Result Display Script</td>
+          <td>relay/show_result.ts &mdash; Live PBC state decoder</td>
+          <td><a href="https://github.com/Profila/Aiken-Partisia_MPC/blob/main/relay/show_result.ts" target="_blank">GitHub &rarr;</a></td>
+        </tr>
+        <tr>
+          <td>Computation Trigger</td>
+          <td>relay/trigger_computation.ts</td>
+          <td><a href="https://github.com/Profila/Aiken-Partisia_MPC/blob/main/relay/trigger_computation.ts" target="_blank">GitHub &rarr;</a></td>
+        </tr>
+        <tr>
           <td>Submission Log</td>
           <td>relay/secret-submissions-log.json (no raw values)</td>
           <td><a href="https://github.com/Profila/Aiken-Partisia_MPC/blob/main/relay/secret-submissions-log.json" target="_blank">GitHub &rarr;</a></td>
@@ -693,6 +736,11 @@ nav .links a:hover{color:#fff;text-decoration:none}
           <td>Closeout Report</td>
           <td>docs/evidence/closeout-report.json</td>
           <td><a href="https://github.com/Profila/Aiken-Partisia_MPC/blob/main/docs/evidence/closeout-report.json" target="_blank">GitHub &rarr;</a></td>
+        </tr>
+        <tr>
+          <td>MPC Result JSON</td>
+          <td>relay/mpc-result.json &mdash; Cross-chain result with TX hashes</td>
+          <td><a href="https://github.com/Profila/Aiken-Partisia_MPC/blob/main/relay/mpc-result.json" target="_blank">GitHub &rarr;</a></td>
         </tr>
         <tr>
           <td>Full Repository</td>
@@ -716,7 +764,7 @@ nav .links a:hover{color:#fff;text-decoration:none}
       &nbsp;&bull;&nbsp;
       <a href="https://preprod.cardanoscan.io/transaction/50d28fd2bd263a84485b45280afd19bb4c3e20c24e9a4b52b6eac20418d53a57" target="_blank">Cardano TX</a>
     </p>
-    <p style="margin-top:.8rem;font-size:.65rem;color:#475569">Generated 2026-03-02 &bull; All evidence verifiable on-chain</p>
+    <p style="margin-top:.8rem;font-size:.65rem;color:#475569">Updated 2026-03-02 &bull; All evidence verifiable on-chain &bull; 5 real ZK secret-input transactions</p>
   </div>
 </footer>
 
