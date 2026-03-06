@@ -26,7 +26,7 @@
       "status": "Complete",
       "deliverables": [
         "PBC ZK contract (contract.rs + zk_compute.rs) with age_threshold and survey_match computations",
-        "9 unit tests (all passing via cargo test)",
+        "11 unit tests (all passing via cargo test)",
         "Off-chain relay (relay.ts) polling Blockfrost and bridging to PBC",
         "Contract deployed to PBC testnet via browser"
       ],

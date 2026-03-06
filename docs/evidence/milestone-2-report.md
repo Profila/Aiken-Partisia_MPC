@@ -26,12 +26,12 @@ Milestone 2 delivers the Partisia Blockchain MPC smart contract, the ZK computat
 | Deployable package | `partisia/deploy/profila_mpc.pbc` | 64 KB |
 
 **Build command:** `cargo pbc build --release`
-**Toolchain:** cargo-partisia-contract v5.513.0, zkcompiler v6.35.0, SDK v15.1.0
+**Toolchain:** cargo-partisia-contract v5.513.0, zkcompiler v6.35.0, SDK v.16.126.0 (binder 11.9.0)
 
-### 2. Unit Tests — 9/9 Passing
+### 2. Unit Tests — 11/11 Passing
 
 ```
-running 9 tests
+running 11 tests
 test tests::test_compute_age_threshold_result ... ok
 test tests::test_compute_survey_match_result ... ok
 test tests::test_decode_empty_slice ... ok
@@ -41,13 +41,16 @@ test tests::test_decode_zero_result ... ok
 test tests::test_init_contract_min_participants_validation ... ok
 test tests::test_init_contract_rejects_invalid_query_types ... ok
 test tests::test_init_contract_valid_query_types ... ok
+test tests::test_survey_sum_result_decoding ... ok
+test tests::test_query_type_dispatch_logic ... ok
 
-test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
 ```
 
 **Test categories:**
 - Contract initialisation validation (query types, participant bounds)
-- MPC computation result decoding (age threshold, survey match)
+- MPC computation result decoding (age threshold, survey match, survey sum)
+- Query-type dispatch logic
 - Edge cases (empty, short, zero, large values)
 
 ### 3. Off-Chain Relay — Live Cardano Detection
@@ -118,7 +121,7 @@ curl -H "project_id: $BLOCKFROST_PROJECT_ID" \
 | Tool | Version |
 |------|---------|
 | cargo-partisia-contract | 5.513.0 |
-| PBC SDK | 15.1.0 (git tag) |
+| PBC SDK | v.16.126.0 (binder 11.9.0) |
 | ZK Compiler | 6.35.0 (Maven JAR) |
 | Rust | 1.86.0 |
 | Java | OpenJDK 17.0.18 |
