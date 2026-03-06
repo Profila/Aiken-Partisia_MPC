@@ -108,7 +108,22 @@ interface MpcResult {
 
 const PBC_API_BASE =
   process.env.PBC_TESTNET_URL ?? "https://node1.testnet.partisiablockchain.com";
-const PBC_CONTRACT_ADDRESS = process.env.PBC_CONTRACT_ADDRESS ?? "";
+
+// Contract address: prefer .env, fall back to deploy-m3.json (so reviewers
+// can run this script without creating a .env file).
+function resolvePbcContractAddress(): string {
+  if (process.env.PBC_CONTRACT_ADDRESS) return process.env.PBC_CONTRACT_ADDRESS;
+  const deployPath = path.resolve(
+    __dirname,
+    "../partisia/deploy/deploy-m3.json",
+  );
+  if (fs.existsSync(deployPath)) {
+    const deploy = JSON.parse(fs.readFileSync(deployPath, "utf-8"));
+    if (deploy.contract_address) return deploy.contract_address as string;
+  }
+  return "";
+}
+const PBC_CONTRACT_ADDRESS = resolvePbcContractAddress();
 
 const CARDANO_DEPLOY_PATH = path.resolve(
   __dirname,

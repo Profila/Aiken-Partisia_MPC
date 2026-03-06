@@ -24,10 +24,34 @@ dotenv.config({ path: path.resolve(__dirname, "../.env") });
 
 const BLOCKFROST_URL = "https://cardano-preprod.blockfrost.io/api/v0";
 const BLOCKFROST_PROJECT_ID = process.env.BLOCKFROST_PROJECT_ID ?? "";
-const CARDANO_SCRIPT_ADDRESS = process.env.CARDANO_SCRIPT_ADDRESS ?? "";
 const PBC_TESTNET_URL =
   process.env.PBC_TESTNET_URL ?? "https://node1.testnet.partisiablockchain.com";
-const PBC_CONTRACT_ADDRESS = process.env.PBC_CONTRACT_ADDRESS ?? "";
+
+// Script address and PBC contract: prefer .env, fall back to deploy JSON files
+// so reviewers can run with just a Blockfrost key in .env.
+function resolveFromDeploy(
+  envVar: string | undefined,
+  deployFile: string,
+  field: string,
+): string {
+  if (envVar) return envVar;
+  const deployPath = path.resolve(__dirname, deployFile);
+  if (fs.existsSync(deployPath)) {
+    const data = JSON.parse(fs.readFileSync(deployPath, "utf-8"));
+    if (data[field]) return data[field] as string;
+  }
+  return "";
+}
+const CARDANO_SCRIPT_ADDRESS = resolveFromDeploy(
+  process.env.CARDANO_SCRIPT_ADDRESS,
+  "../cardano/scripts/deploy-m1.json",
+  "script_address",
+);
+const PBC_CONTRACT_ADDRESS = resolveFromDeploy(
+  process.env.PBC_CONTRACT_ADDRESS,
+  "../partisia/deploy/deploy-m3.json",
+  "contract_address",
+);
 const POLL_INTERVAL_MS = 30_000;
 
 const PROCESSED_FILE = path.resolve(__dirname, "processed.json");

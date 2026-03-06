@@ -40,11 +40,11 @@
   "privacy_verification": {
     "contract_state_tab": {
       "individual_data_visible": false,
-      "fields_shown": ["administrator", "dataset_id", "query_type", "min_participants", "result (None)", "computation_complete (false)"]
+      "fields_shown": ["administrator", "dataset_id", "query_type", "min_participants", "result (5)", "computation_complete (true)"]
     },
     "secret_data_tab": {
       "individual_data_visible": false,
-      "content": "Computation status: Waiting. No ZK variables yet."
+      "content": "Computation status: Complete. Aggregate result declassified — no individual ZK variables visible."
     },
     "submission_log": {
       "individual_data_visible": false,
