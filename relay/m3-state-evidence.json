@@ -1,23 +1,23 @@
 {
   "evidence_type": "M3 — Privacy Verification",
-  "contract_address": "0395e78580157893cde88165d1340e0b9992c31417",
-  "browser_url": "https://browser.testnet.partisiablockchain.com/contracts/0395e78580157893cde88165d1340e0b9992c31417",
-  "captured_at": "2026-03-02T00:40:00Z",
+  "contract_address": "039ed9214602f2a93eb05411f852fa78a476607634",
+  "browser_url": "https://browser.testnet.partisiablockchain.com/contracts/039ed9214602f2a93eb05411f852fa78a476607634",
+  "captured_at": "2026-03-06T16:20:53Z",
   "contract_state": {
-    "administrator": "003942bda1d9f23da4bcfeb0b230f7c261d0605712",
+    "administrator": "00ce80e51b802cf27f6091d5d151f9e0e605df8337",
     "dataset_id": "profila_test_v1",
     "query_type": "age_threshold",
     "min_participants": 3,
-    "result": null,
-    "computation_complete": false
+    "result": 5,
+    "computation_complete": true
   },
   "secret_data_tab": {
-    "computation_status": "Waiting",
-    "zk_variables": "None — no ZK variables yet",
+    "computation_status": "Complete",
+    "zk_variables": "Computed — aggregate result declassified",
     "individual_data_visible": false
   },
   "submissions": {
-    "total_submitted": 20,
+    "total_submitted": 5,
     "query_type": "age_threshold",
     "submission_log": "relay/secret-submissions-log.json",
     "raw_values_logged": false,
