@@ -26,6 +26,17 @@ git clone https://github.com/Profila/Aiken-Partisia_MPC.git
 cd Aiken-Partisia_MPC
 ```
 
+**Environment setup (relay scripts):**
+
+Most relay scripts auto-read addresses from `deploy-m1.json` / `deploy-m3.json`, so you only need a Blockfrost key for the relay step:
+
+```
+cp .env.example .env
+# Edit .env → set BLOCKFROST_PROJECT_ID to your Preprod key
+```
+
+`show_result.ts` works with **no .env at all** — it reads everything from deploy files.
+
 ## 2. M1 — Verify Cardano Aiken Contract
 
 **Run tests:**
