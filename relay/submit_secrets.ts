@@ -60,7 +60,7 @@ const KEYS_DIR = path.resolve(__dirname, "../partisia/keys");
 const SECRET_INPUT_SHORTNAME = 0x40;
 
 /** Gas to allocate per secret-input transaction. */
-const GAS_PER_TX = 25_000;
+const GAS_PER_TX = 50_000;
 
 /** Delay (ms) between consecutive submissions to avoid nonce conflicts. */
 const INTER_TX_DELAY_MS = 3_000;
