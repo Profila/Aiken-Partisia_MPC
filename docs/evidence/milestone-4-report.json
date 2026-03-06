@@ -1,7 +1,7 @@
 {
   "milestone": "M4 — MPC Computation, Result Display & Closeout",
   "project": "Project Catalyst #1200045 — MPC as a Layer 2 Service to Cardano",
-  "date": "2026-03-02",
+  "date": "2026-03-06",
   "status": "Complete",
 
   "result_display": {
@@ -17,14 +17,14 @@
       "Supports --offline mode for cached state"
     ],
     "live_state_decoded": {
-      "administrator": "003942bda1d9f23da4bcfeb0b230f7c261d0605712",
+      "administrator": "00ce80e51b802cf27f6091d5d151f9e0e605df8337",
       "dataset_id": "profila_test_v1",
       "query_type": "age_threshold",
       "min_participants": 3,
-      "result": null,
-      "computation_complete": false,
-      "gas_balance": 332837,
-      "shard": "Shard1"
+      "result": 5,
+      "computation_complete": true,
+      "gas_balance": 99835041,
+      "shard": "Shard0"
     }
   },
 
@@ -32,10 +32,11 @@
     "script": "relay/trigger_computation.ts",
     "action": "start_computation",
     "shortname": "0x01",
+    "trigger_tx": "d836a6fc075e9ce7f4c77d905975a77a7304818c4c229c77d91a0b36f07c54cc",
+    "gas_fee": 100000000,
     "methods": {
-      "browser": "PBC testnet browser Interact tab (current working method)",
-      "cli": "cargo pbc transaction action (currently returns HTTP 400 for all contracts)",
-      "sdk": "PBC TypeScript SDK (post-PoC enhancement)"
+      "browser": "PBC testnet browser Interact tab (used for this run, 100M gas)",
+      "sdk": "PBC TypeScript SDK (relay/trigger_computation.ts — corrected RPC encoding with 0x09 prefix)"
     },
     "prerequisites": [
       "Administrator account must be sender",
@@ -51,24 +52,25 @@
     "unique_senders": 5,
     "all_on_chain": true,
     "tx_hashes": [
-      "c4c0450bbb06a9ce5fcce56229e88e0e51ec5aa5a1d706dde1c4313340635e96",
-      "d774f1f5e64cc14cb220b5d324fe47d319c9f5ceb56eb5a7dd75d3f861f811eb",
-      "d4ce72e1952064735132d629a3fd3d57f27c8914e57c05ead53111408e2b01a1",
-      "a61222941b834e8b3cb5afcadaae7ca50b2b273136a266b0a04e5786335390dd",
-      "9556d0f653e53de13f3ac4d29338d2ff6c4145cc95a78c1a553a77d880313c8d"
+      "7507fd18ef779c459c7248af32bee6e660f6b4ad28c0a92a44b5f87bf82628f0",
+      "519859f57ccc1acd44ed73fe80ae2a3c051b15ecf22e450d282891dfeeebaa6a",
+      "407423fd9996067e8c4b5de9390bdad6c14c1da29a93273c4d4adbdb14bb63cb",
+      "4bfe3b1466c68f8b2e73376b35677ed2592ffd859538c7ae89794846d9389f12",
+      "e4c158dda054b2fc9ba17a38a7fb4f8373c4720e6ce49d5d6aa749fc5b4d5f94"
     ],
-    "browser_url": "https://browser.testnet.partisiablockchain.com/contracts/0395e78580157893cde88165d1340e0b9992c31417?tab=transactions"
+    "browser_url": "https://browser.testnet.partisiablockchain.com/contracts/039ed9214602f2a93eb05411f852fa78a476607634?tab=transactions"
   },
 
-  "expected_result": {
+  "computation_result": {
     "query_type": "age_threshold",
     "dataset_id": "profila_test_v1",
     "total_users_in_dataset": 50,
-    "expected_over_18_full_dataset": 35,
     "submitted_in_poc": 5,
+    "on_chain_result": 5,
+    "computation_complete": true,
     "computation_method": "ZK MPC via PBC — count of secret values > 18",
-    "result_source": "expected (test dataset) — 5 real secret inputs submitted on-chain",
-    "note": "5 real ZK secret-input transactions submitted to the contract using the PBC TypeScript SDK. Each transaction encrypts the secret value for all 4 MPC engines. The ZK compute kernel counts secrets exceeding the age threshold (18) and returns the aggregate count."
+    "result_source": "on-chain (live ZK MPC computation)",
+    "note": "5 real ZK secret-input transactions submitted, MPC computation triggered with 100M gas, all 4 MPC nodes committed results. On-chain result: 5 out of 5 submitted users have age > 18."
   },
 
   "e2e_run_log": {

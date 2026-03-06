@@ -2,7 +2,7 @@
 title: "E2E Technical Test Flow"
 subtitle: "Project Catalyst #1200045 — MPC as a Layer 2 Service to Cardano"
 author: "Profila AG × Partisia Blockchain"
-date: "2026-03-02"
+date: "2026-03-06"
 ---
 
 # E2E Technical Test Flow
@@ -71,7 +71,7 @@ cd ../partisia/contracts
 cargo test
 ```
 
-Expected: `9 passed; 0 failed`
+Expected: `11 passed; 0 failed`
 
 **Build ZK contract:**
 
@@ -103,14 +103,14 @@ Check: Contains `cardano_tx: 50d28fd2...`, `dataset_id: profila_test_v1`, `query
 
 **Verify PBC contract on-chain (browser):**
 
-<https://browser.testnet.partisiablockchain.com/contracts/0395e78580157893cde88165d1340e0b9992c31417>
+<https://browser.testnet.partisiablockchain.com/contracts/039ed9214602f2a93eb05411f852fa78a476607634>
 
 Check: State tab shows `administrator`, `dataset_id: profila_test_v1`, `query_type: age_threshold`, `min_participants: 3`
 
 **Verify PBC contract on-chain (API):**
 
 ```
-curl -s "https://node1.testnet.partisiablockchain.com/chain/contracts/0395e78580157893cde88165d1340e0b9992c31417" | python3 -m json.tool | head -20
+curl -s "https://node1.testnet.partisiablockchain.com/chain/contracts/039ed9214602f2a93eb05411f852fa78a476607634" | python3 -m json.tool | head -20
 ```
 
 Check: Returns contract data with `serializedContract` field
@@ -123,7 +123,7 @@ cat ../partisia/deploy/deploy-m3.json
 
 Check: `contract_address`, `deployment_tx`, `init_params` match browser state
 
-**✅ M2 pass criteria:** 9/9 Rust tests, ZK contract builds, relay detects Cardano UTxO, PBC contract live on testnet
+**✅ M2 pass criteria:** 11/11 Rust tests, ZK contract builds, relay detects Cardano UTxO, PBC contract live on testnet
 
 ## 4. M3 — Verify Secret Input Flow & Privacy
 
@@ -141,23 +141,23 @@ Check:
 
 **Verify all 5 TXs on PBC testnet (browser):**
 
-<https://browser.testnet.partisiablockchain.com/contracts/0395e78580157893cde88165d1340e0b9992c31417?tab=transactions>
+<https://browser.testnet.partisiablockchain.com/contracts/039ed9214602f2a93eb05411f852fa78a476607634?tab=transactions>
 
 Check: 5 secret-input transactions from 5 different senders visible
 
 **Verify individual TXs (spot-check any):**
 
-- <https://browser.testnet.partisiablockchain.com/transactions/c4c0450bbb06a9ce5fcce56229e88e0e51ec5aa5a1d706dde1c4313340635e96>
-- <https://browser.testnet.partisiablockchain.com/transactions/d774f1f5e64cc14cb220b5d324fe47d319c9f5ceb56eb5a7dd75d3f861f811eb>
-- <https://browser.testnet.partisiablockchain.com/transactions/d4ce72e1952064735132d629a3fd3d57f27c8914e57c05ead53111408e2b01a1>
-- <https://browser.testnet.partisiablockchain.com/transactions/a61222941b834e8b3cb5afcadaae7ca50b2b273136a266b0a04e5786335390dd>
-- <https://browser.testnet.partisiablockchain.com/transactions/9556d0f653e53de13f3ac4d29338d2ff6c4145cc95a78c1a553a77d880313c8d>
+- <https://browser.testnet.partisiablockchain.com/transactions/7507fd18ef779c459c7248af32bee6e660f6b4ad28c0a92a44b5f87bf82628f0>
+- <https://browser.testnet.partisiablockchain.com/transactions/519859f57ccc1acd44ed73fe80ae2a3c051b15ecf22e450d282891dfeeebaa6a>
+- <https://browser.testnet.partisiablockchain.com/transactions/407423fd9996067e8c4b5de9390bdad6c14c1da29a93273c4d4adbdb14bb63cb>
+- <https://browser.testnet.partisiablockchain.com/transactions/4bfe3b1466c68f8b2e73376b35677ed2592ffd859538c7ae89794846d9389f12>
+- <https://browser.testnet.partisiablockchain.com/transactions/e4c158dda054b2fc9ba17a38a7fb4f8373c4720e6ce49d5d6aa749fc5b4d5f94>
 
 Check: Each TX exists, shows secret_input action type
 
 **Privacy verification (browser):**
 
-<https://browser.testnet.partisiablockchain.com/contracts/0395e78580157893cde88165d1340e0b9992c31417>
+<https://browser.testnet.partisiablockchain.com/contracts/039ed9214602f2a93eb05411f852fa78a476607634>
 
 Check:
 
@@ -179,9 +179,9 @@ cd ../cardano && aiken check
 cd ../partisia/contracts && cargo test
 ```
 
-Expected: 6/6 + 9/9 = 15/15 pass
+Expected: 6/6 + 11/11 = 17/17 pass
 
-**✅ M3 pass criteria:** 5 real TXs on PBC testnet, submission log has no raw values, privacy verified in State + Secret data tabs, 15/15 tests pass
+**✅ M3 pass criteria:** 5 real TXs on PBC testnet, submission log has no raw values, privacy verified in State + Secret data tabs, 17/17 tests pass
 
 ## 5. M4 — Verify E2E Result & Closeout
 
@@ -192,7 +192,7 @@ cd ../../relay
 npx ts-node show_result.ts
 ```
 
-Check: Fetches live PBC state, decodes `ProfilaMpcState`, shows contract fields, displays expected result (35)
+Check: Fetches live PBC state, decodes `ProfilaMpcState`, shows contract fields, displays on-chain result (5 of 5 submitted users over 18)
 
 **Verify result JSON:**
 
@@ -216,15 +216,15 @@ Check: 6 stages documented with real TX hashes and timestamps
 cat ../docs/evidence/closeout-report.json
 ```
 
-Check: All 4 milestones status: Complete, test summary 6+9=15, architecture documented
+Check: All 4 milestones status: Complete, test summary 6+11=17, architecture documented
 
 **Cross-chain verification (browser):**
 
 | Chain | URL | What to verify |
 |-------|-----|----------------|
 | Cardano | <https://preprod.cardanoscan.io/transaction/50d28fd2bd263a84485b45280afd19bb4c3e20c24e9a4b52b6eac20418d53a57> | Inline datum with `profila_test_v1` |
-| PBC | <https://browser.testnet.partisiablockchain.com/contracts/0395e78580157893cde88165d1340e0b9992c31417> | State matches, 5 TXs visible |
-| PBC | <https://browser.testnet.partisiablockchain.com/transactions/8e8ea840a7bb7c7a98c0df0a95e78580157893cde88165d1340e0b9992c31417> | Deployment TX exists |
+| PBC | <https://browser.testnet.partisiablockchain.com/contracts/039ed9214602f2a93eb05411f852fa78a476607634> | State matches, 5 TXs visible |
+| PBC | <https://browser.testnet.partisiablockchain.com/transactions/d1394ee403db29de119d7b6b9ed9214602f2a93eb05411f852fa78a476607634> | Deployment TX exists |
 
 **Open evidence page:**
 
@@ -241,7 +241,7 @@ Check: All links resolve, TX hashes match on-chain records
 | # | Check | How |
 |---|-------|-----|
 | 1 | Aiken 6/6 tests | `cd cardano && aiken check` |
-| 2 | Rust 9/9 tests | `cd partisia/contracts && cargo test` |
+| 2 | Rust 11/11 tests | `cd partisia/contracts && cargo test` |
 | 3 | ZK contract builds | `cargo pbc build --release` |
 | 4 | Relay detects Cardano UTxO | `cd relay && npx ts-node relay.ts --once` |
 | 5 | Cardano TX exists | CardanoScan link above |

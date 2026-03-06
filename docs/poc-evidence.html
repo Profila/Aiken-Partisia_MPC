@@ -245,7 +245,7 @@ nav .links a:hover{color:#fff;text-decoration:none}
 
   <div class="hero-stats">
     <div class="hero-stat"><div class="num">2</div><div class="lbl">Blockchains</div></div>
-    <div class="hero-stat"><div class="num">15</div><div class="lbl">Unit Tests</div></div>
+    <div class="hero-stat"><div class="num">17</div><div class="lbl">Unit Tests</div></div>
     <div class="hero-stat"><div class="num">5</div><div class="lbl">On-Chain Secret TXs</div></div>
     <div class="hero-stat"><div class="num">0</div><div class="lbl">Individual Values Exposed</div></div>
   </div>
@@ -372,10 +372,10 @@ nav .links a:hover{color:#fff;text-decoration:none}
         <div class="ms-body">
           <p>Built and compiled a Rust ZK MPC contract with <code>age_threshold</code> and <code>survey_match</code> computations. Created an off-chain TypeScript relay that polls Blockfrost, parses the Cardano datum, and bridges the request to the PBC contract.</p>
           <div class="ms-tests">
-            <span class="ms-test-badge">9 / 9 tests pass (cargo test)</span>
+            <span class="ms-test-badge">11 / 11 tests pass (cargo test)</span>
           </div>
           <div class="ms-evidence">
-            <a href="https://browser.testnet.partisiablockchain.com/contracts/0395e78580157893cde88165d1340e0b9992c31417" target="_blank">&#9670; View PBC Contract</a>
+            <a href="https://browser.testnet.partisiablockchain.com/contracts/039ed9214602f2a93eb05411f852fa78a476607634" target="_blank">&#9670; View PBC Contract</a>
             <a href="https://github.com/Profila/Aiken-Partisia_MPC/blob/main/partisia/contracts/profila_mpc/src/contract.rs" target="_blank">&#128196; Contract Source</a>
             <a href="https://github.com/Profila/Aiken-Partisia_MPC/blob/main/relay/relay.ts" target="_blank">&#128196; Relay Source</a>
             <a href="https://github.com/Profila/Aiken-Partisia_MPC/blob/main/relay/relay-log.json" target="_blank">&#128203; Relay Log</a>
@@ -395,7 +395,7 @@ nav .links a:hover{color:#fff;text-decoration:none}
           <p>Created a synthetic dataset of 50 users and submitted <strong>5 real on-chain ZK secret-input transactions</strong> to the PBC contract via the <code>@partisiablockchain/zk-client</code> TypeScript SDK. Each transaction encrypts the secret for all 4 MPC engines. The submission log contains <strong>only hashed user IDs, sender addresses, and TX references</strong> &mdash; zero raw ages or survey answers are recorded anywhere in the system.</p>
           <div class="ms-evidence">
             <a href="https://github.com/Profila/Aiken-Partisia_MPC/blob/main/relay/secret-submissions-log.json" target="_blank">&#128274; Submission Log (no raw values)</a>
-            <a href="https://browser.testnet.partisiablockchain.com/contracts/0395e78580157893cde88165d1340e0b9992c31417?tab=transactions" target="_blank">&#128279; PBC Transactions (live)</a>
+            <a href="https://browser.testnet.partisiablockchain.com/contracts/039ed9214602f2a93eb05411f852fa78a476607634?tab=transactions" target="_blank">&#128279; PBC Transactions (live)</a>
             <a href="https://github.com/Profila/Aiken-Partisia_MPC/blob/main/test-data/profila_test_users.json" target="_blank">&#128202; Test Dataset</a>
             <a href="https://youtu.be/psm2lMU7n1o" target="_blank" style="background:rgba(251,59,59,.08);border-color:rgba(251,59,59,.2)">&#9654; YouTube Demo</a>
           </div>
@@ -450,20 +450,21 @@ nav .links a:hover{color:#fff;text-decoration:none}
 
       <div class="state-card" style="border-color:rgba(124,58,237,.3)">
         <h3><span style="color:var(--accent2)">&#9670;</span> Partisia Testnet</h3>
-        <div class="state-row"><span class="state-key">Contract</span><span class="state-val">0395e785...c31417</span></div>
-        <div class="state-row"><span class="state-key">Administrator</span><span class="state-val">003942bd...605712</span></div>
+        <div class="state-row"><span class="state-key">Contract</span><span class="state-val">039ed921...607634</span></div>
+        <div class="state-row"><span class="state-key">Administrator</span><span class="state-val">00ce80e5...df8337</span></div>
         <div class="state-row"><span class="state-key">dataset_id</span><span class="state-val">profila_test_v1</span></div>
         <div class="state-row"><span class="state-key">query_type</span><span class="state-val">age_threshold</span></div>
         <div class="state-row"><span class="state-key">min_participants</span><span class="state-val">3</span></div>
         <div class="state-row"><span class="state-key">Secret Inputs</span><span class="state-val" style="color:#22c55e">5 on-chain TXs</span></div>
         <div class="state-row"><span class="state-key">ZK Variables</span><span class="state-val">nextVariableId = 5</span></div>
-        <div class="state-row"><span class="state-key">Calculation Status</span><span class="state-val" style="color:var(--amber)">WAITING</span></div>
-        <div class="state-row"><span class="state-key">computation_complete</span><span class="state-val">false</span></div>
-        <div class="state-row"><span class="state-key">Shard</span><span class="state-val">Shard1</span></div>
+        <div class="state-row"><span class="state-key">Calculation Status</span><span class="state-val" style="color:var(--green)">COMPLETE</span></div>
+        <div class="state-row"><span class="state-key">computation_complete</span><span class="state-val" style="color:var(--green)">true</span></div>
+        <div class="state-row"><span class="state-key">result</span><span class="state-val" style="color:var(--green)">5</span></div>
+        <div class="state-row"><span class="state-key">Shard</span><span class="state-val">Shard0</span></div>
         <div style="margin-top:.8rem;text-align:center">
-          <a href="https://browser.testnet.partisiablockchain.com/contracts/0395e78580157893cde88165d1340e0b9992c31417" target="_blank" style="font-size:.75rem">View on PBC Browser &rarr;</a>
+          <a href="https://browser.testnet.partisiablockchain.com/contracts/039ed9214602f2a93eb05411f852fa78a476607634" target="_blank" style="font-size:.75rem">View on PBC Browser &rarr;</a>
           &nbsp;&middot;&nbsp;
-          <a href="https://browser.testnet.partisiablockchain.com/contracts/0395e78580157893cde88165d1340e0b9992c31417?tab=transactions" target="_blank" style="font-size:.75rem">Transactions &rarr;</a>
+          <a href="https://browser.testnet.partisiablockchain.com/contracts/039ed9214602f2a93eb05411f852fa78a476607634?tab=transactions" target="_blank" style="font-size:.75rem">Transactions &rarr;</a>
         </div>
       </div>
     </div>
@@ -547,13 +548,22 @@ nav .links a:hover{color:#fff;text-decoration:none}
     </div>
 
     <div class="results-row">
+      <div class="result-card" style="border-color:rgba(52,211,153,.3)">
+        <div class="result-label">On-Chain MPC Result (Live)</div>
+        <div class="result-num green">5</div>
+        <div class="result-desc">of 5 submitted users over age 18</div>
+        <p style="font-size:.7rem;color:var(--muted);margin-top:.6rem">
+          <strong>Live ZK MPC computation complete.</strong> The ZK kernel counted <code>secret_value &gt; 18</code> across all MPC shares.
+          All 5 submitted test users had age &gt; 18, producing result = 5. Verifiable on-chain at the
+          <a href="https://browser.testnet.partisiablockchain.com/contracts/039ed9214602f2a93eb05411f852fa78a476607634" target="_blank">PBC contract</a>.
+        </p>
+      </div>
       <div class="result-card">
-        <div class="result-label">Age Threshold Query (Expected)</div>
-        <div class="result-num green">35</div>
+        <div class="result-label">Full Dataset Expected (age_threshold)</div>
+        <div class="result-num green" style="opacity:.5">35</div>
         <div class="result-desc">of 50 users over age 18 in full dataset</div>
         <p style="font-size:.7rem;color:var(--muted);margin-top:.6rem">
-          The ZK kernel counts <code>secret_value &gt; 18</code> across all MPC shares without revealing any individual age.
-          <strong>5 real secrets submitted on-chain</strong> via PBC TypeScript SDK &mdash; computation pending trigger.
+          If all 50 synthetic users submitted secrets, the expected result would be 35. The PoC submitted 5 users to demonstrate the end-to-end flow.
         </p>
       </div>
       <div class="result-card">
@@ -598,7 +608,7 @@ nav .links a:hover{color:#fff;text-decoration:none}
         <div class="privacy-icon">&#128274;</div>
         <div>
           <h4>PBC Secret Data Tab</h4>
-          <p>Shows computation status only (Waiting). No ZK variables visible to any party.</p>
+          <p>Shows computation status only (Complete). No ZK variables visible to any party.</p>
         </div>
       </div>
       <div class="privacy-item">
@@ -626,7 +636,7 @@ nav .links a:hover{color:#fff;text-decoration:none}
         <div class="privacy-icon">&#128274;</div>
         <div>
           <h4>MPC Result</h4>
-          <p>Aggregate count (35). No individual contribution can be determined from the output.</p>
+          <p>Aggregate count only (5 of 5 submitted). No individual contribution can be determined from the output.</p>
         </div>
       </div>
     </div>
@@ -659,38 +669,43 @@ nav .links a:hover{color:#fff;text-decoration:none}
         </tr>
         <tr>
           <td>PBC ZK Contract</td>
-          <td class="hash">0395e78580157893cde88165d1340e0b9992c31417</td>
-          <td><a href="https://browser.testnet.partisiablockchain.com/contracts/0395e78580157893cde88165d1340e0b9992c31417" target="_blank">PBC Browser &rarr;</a></td>
+          <td class="hash">039ed9214602f2a93eb05411f852fa78a476607634</td>
+          <td><a href="https://browser.testnet.partisiablockchain.com/contracts/039ed9214602f2a93eb05411f852fa78a476607634" target="_blank">PBC Browser &rarr;</a></td>
         </tr>
         <tr>
           <td>PBC Deployment TX</td>
-          <td class="hash">8e8ea840a7bb7c7a98c0df0a95e78580157893cde88165d1340e0b9992c31417</td>
-          <td><a href="https://browser.testnet.partisiablockchain.com/transactions/8e8ea840a7bb7c7a98c0df0a95e78580157893cde88165d1340e0b9992c31417" target="_blank">PBC Browser &rarr;</a></td>
+          <td class="hash">d1394ee403db29de119d7b6b9ed9214602f2a93eb05411f852fa78a476607634</td>
+          <td><a href="https://browser.testnet.partisiablockchain.com/transactions/d1394ee403db29de119d7b6b9ed9214602f2a93eb05411f852fa78a476607634" target="_blank">PBC Browser &rarr;</a></td>
         </tr>
         <tr>
           <td>Secret Input TX #1</td>
-          <td class="hash">c4c0450bbb06a9ce5fcce56229e88e0e51ec5aa5a1d706dde1c4313340635e96</td>
-          <td><a href="https://browser.testnet.partisiablockchain.com/transactions/c4c0450bbb06a9ce5fcce56229e88e0e51ec5aa5a1d706dde1c4313340635e96" target="_blank">PBC Browser &rarr;</a></td>
+          <td class="hash">7507fd18ef779c459c7248af32bee6e660f6b4ad28c0a92a44b5f87bf82628f0</td>
+          <td><a href="https://browser.testnet.partisiablockchain.com/transactions/7507fd18ef779c459c7248af32bee6e660f6b4ad28c0a92a44b5f87bf82628f0" target="_blank">PBC Browser &rarr;</a></td>
         </tr>
         <tr>
           <td>Secret Input TX #2</td>
-          <td class="hash">d774f1f5e64cc14cb220b5d324fe47d319c9f5ceb56eb5a7dd75d3f861f811eb</td>
-          <td><a href="https://browser.testnet.partisiablockchain.com/transactions/d774f1f5e64cc14cb220b5d324fe47d319c9f5ceb56eb5a7dd75d3f861f811eb" target="_blank">PBC Browser &rarr;</a></td>
+          <td class="hash">519859f57ccc1acd44ed73fe80ae2a3c051b15ecf22e450d282891dfeeebaa6a</td>
+          <td><a href="https://browser.testnet.partisiablockchain.com/transactions/519859f57ccc1acd44ed73fe80ae2a3c051b15ecf22e450d282891dfeeebaa6a" target="_blank">PBC Browser &rarr;</a></td>
         </tr>
         <tr>
           <td>Secret Input TX #3</td>
-          <td class="hash">d4ce72e1952064735132d629a3fd3d57f27c8914e57c05ead53111408e2b01a1</td>
-          <td><a href="https://browser.testnet.partisiablockchain.com/transactions/d4ce72e1952064735132d629a3fd3d57f27c8914e57c05ead53111408e2b01a1" target="_blank">PBC Browser &rarr;</a></td>
+          <td class="hash">407423fd9996067e8c4b5de9390bdad6c14c1da29a93273c4d4adbdb14bb63cb</td>
+          <td><a href="https://browser.testnet.partisiablockchain.com/transactions/407423fd9996067e8c4b5de9390bdad6c14c1da29a93273c4d4adbdb14bb63cb" target="_blank">PBC Browser &rarr;</a></td>
         </tr>
         <tr>
           <td>Secret Input TX #4</td>
-          <td class="hash">a61222941b834e8b3cb5afcadaae7ca50b2b273136a266b0a04e5786335390dd</td>
-          <td><a href="https://browser.testnet.partisiablockchain.com/transactions/a61222941b834e8b3cb5afcadaae7ca50b2b273136a266b0a04e5786335390dd" target="_blank">PBC Browser &rarr;</a></td>
+          <td class="hash">4bfe3b1466c68f8b2e73376b35677ed2592ffd859538c7ae89794846d9389f12</td>
+          <td><a href="https://browser.testnet.partisiablockchain.com/transactions/4bfe3b1466c68f8b2e73376b35677ed2592ffd859538c7ae89794846d9389f12" target="_blank">PBC Browser &rarr;</a></td>
         </tr>
         <tr>
           <td>Secret Input TX #5</td>
-          <td class="hash">9556d0f653e53de13f3ac4d29338d2ff6c4145cc95a78c1a553a77d880313c8d</td>
-          <td><a href="https://browser.testnet.partisiablockchain.com/transactions/9556d0f653e53de13f3ac4d29338d2ff6c4145cc95a78c1a553a77d880313c8d" target="_blank">PBC Browser &rarr;</a></td>
+          <td class="hash">e4c158dda054b2fc9ba17a38a7fb4f8373c4720e6ce49d5d6aa749fc5b4d5f94</td>
+          <td><a href="https://browser.testnet.partisiablockchain.com/transactions/e4c158dda054b2fc9ba17a38a7fb4f8373c4720e6ce49d5d6aa749fc5b4d5f94" target="_blank">PBC Browser &rarr;</a></td>
+        </tr>
+        <tr>
+          <td>Computation Trigger TX</td>
+          <td class="hash">d836a6fc075e9ce7f4c77d905975a77a7304818c4c229c77d91a0b36f07c54cc</td>
+          <td><a href="https://browser.testnet.partisiablockchain.com/transactions/d836a6fc075e9ce7f4c77d905975a77a7304818c4c229c77d91a0b36f07c54cc" target="_blank">PBC Browser &rarr;</a></td>
         </tr>
         <tr>
           <td>Aiken Source Code</td>
@@ -791,13 +806,13 @@ nav .links a:hover{color:#fff;text-decoration:none}
     <p style="margin-top:.5rem">
       <a href="https://github.com/Profila/Aiken-Partisia_MPC" target="_blank">GitHub Repository</a>
       &nbsp;&bull;&nbsp;
-      <a href="https://browser.testnet.partisiablockchain.com/contracts/0395e78580157893cde88165d1340e0b9992c31417" target="_blank">PBC Contract</a>
+      <a href="https://browser.testnet.partisiablockchain.com/contracts/039ed9214602f2a93eb05411f852fa78a476607634" target="_blank">PBC Contract</a>
       &nbsp;&bull;&nbsp;
       <a href="https://preprod.cardanoscan.io/transaction/50d28fd2bd263a84485b45280afd19bb4c3e20c24e9a4b52b6eac20418d53a57" target="_blank">Cardano TX</a>
       &nbsp;&bull;&nbsp;
       <a href="https://youtu.be/jwwfdTSUS2w" target="_blank">Full Video Demo (M1-M4)</a>
     </p>
-    <p style="margin-top:.8rem;font-size:.65rem;color:#475569">Updated 2026-03-02 &bull; All evidence verifiable on-chain &bull; 5 real ZK secret-input transactions</p>
+    <p style="margin-top:.8rem;font-size:.65rem;color:#475569">Updated 2026-03-06 &bull; All evidence verifiable on-chain &bull; 5 real ZK secret-input transactions &bull; MPC computation complete (result: 5)</p>
   </div>
 </footer>
 

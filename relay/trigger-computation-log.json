@@ -1,11 +1,33 @@
 [
   {
-    "contract_address": "0395e78580157893cde88165d1340e0b9992c31417",
+    "contract_address": "039ed9214602f2a93eb05411f852fa78a476607634",
     "action": "start_computation",
     "shortname": "0x01",
-    "triggered_at": "2026-03-01T23:51:28.254Z",
-    "method": "dry-run",
-    "status": "documented",
-    "note": "PBC CLI (cargo pbc transaction) returns HTTP 400 for all transaction types on testnet. Browser-based trigger via Interact tab is the verified working method. See trigger_computation.ts for details."
+    "triggered_at": "2026-03-06T15:11:53.027Z",
+    "method": "sdk-programmatic",
+    "status": "failed",
+    "tx_id": "03a982bd0f81d486840833165acb20d270852548d005d83d7048adad39bf2585",
+    "note": "SDK trigger sent Buffer([0x01]) as RPC; PBC runtime expects varint-encoded shortname (0x0901). Inner contract event failed with 'Unable to read int'."
+  },
+  {
+    "contract_address": "039ed9214602f2a93eb05411f852fa78a476607634",
+    "action": "start_computation",
+    "shortname": "0x01",
+    "triggered_at": "2026-03-06T15:14:49.000Z",
+    "method": "browser-interact",
+    "status": "failed",
+    "tx_id": "e501fd918bfc86ea131e8ed828aee49081ce4ce0debb8cde0af04a916bafff7d",
+    "note": "Browser-based trigger with correct RPC encoding (0x0901), but failed with 'Contract is unable to cover requested gas cost'. Contract had ~443K gas, insufficient for ZK MPC computation across 4 nodes."
+  },
+  {
+    "contract_address": "039ed9214602f2a93eb05411f852fa78a476607634",
+    "action": "start_computation",
+    "shortname": "0x01",
+    "triggered_at": "2026-03-06T16:19:01.000Z",
+    "method": "browser-interact",
+    "status": "triggered",
+    "tx_id": "d836a6fc075e9ce7f4c77d905975a77a7304818c4c229c77d91a0b36f07c54cc",
+    "gas_fee": 100000000,
+    "note": "Browser-based trigger with 100M gas fee. Computation completed successfully. 4 MPC nodes committed results (16:19:07-09). Contract state: computation_complete=true, result=5."
   }
 ]

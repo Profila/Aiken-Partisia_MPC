@@ -1,10 +1,10 @@
 {
-  "contract_address": "0395e78580157893cde88165d1340e0b9992c31417",
-  "deployment_tx": "8e8ea840a7bb7c7a98c0df0a95e78580157893cde88165d1340e0b9992c31417",
-  "deployed_at": "2026-03-02T00:39:04Z",
-  "deployer": "003942bda1d9f23da4bcfeb0b230f7c261d0605712",
+  "contract_address": "039ed9214602f2a93eb05411f852fa78a476607634",
+  "deployment_tx": "d1394ee403db29de119d7b6b9ed9214602f2a93eb05411f852fa78a476607634",
+  "deployed_at": "2026-03-06T16:10:32Z",
+  "deployer": "00ce80e51b802cf27f6091d5d151f9e0e605df8337",
   "network": "testnet",
-  "browser_url": "https://browser.testnet.partisiablockchain.com/contracts/0395e78580157893cde88165d1340e0b9992c31417",
+  "browser_url": "https://browser.testnet.partisiablockchain.com/contracts/039ed9214602f2a93eb05411f852fa78a476607634",
   "init_params": {
     "dataset_id_hex": "70726f66696c615f746573745f7631",
     "dataset_id_utf8": "profila_test_v1",
@@ -12,7 +12,7 @@
     "min_participants": 3
   },
   "contract_state_at_deploy": {
-    "administrator": "003942bda1d9f23da4bcfeb0b230f7c261d0605712",
+    "administrator": "00ce80e51b802cf27f6091d5d151f9e0e605df8337",
     "dataset_id": "Bytes(15) [profila_test_v1]",
     "query_type": "age_threshold",
     "min_participants": 3,
@@ -21,5 +21,5 @@
   },
   "gas_balance_at_deploy": 332837,
   "storage_size_bytes": 82864,
-  "estimated_expiration": "2030-03-07T02:38:40Z"
+  "estimated_expiration": "2030-03-11T18:10:08Z"
 }
