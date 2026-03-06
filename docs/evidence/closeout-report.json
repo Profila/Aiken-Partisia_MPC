@@ -3,7 +3,7 @@
   "project_id": "1200045",
   "fund": "Project Catalyst",
   "proposer": "Profila AG",
-  "date": "2026-03-02",
+  "date": "2026-03-06",
 
   "executive_summary": "This Proof of Concept demonstrates that Cardano smart contracts (Aiken) can coordinate with Partisia Blockchain's MPC infrastructure to run privacy-preserving analytics on personal data. The PoC implements a complete cross-chain architecture: an Aiken validator on Cardano Preprod records the MPC computation request, an off-chain relay bridges the request to Partisia Blockchain, a ZK MPC contract on PBC testnet receives secret user data and computes an aggregate result, and the result is displayed without exposing any individual data at any layer.",
 
@@ -75,7 +75,7 @@
       "chain": "Partisia Blockchain Testnet",
       "contract_type": "ZK MPC contract (Rust)",
       "role": "Receives secret inputs via MPC secret sharing, computes aggregate result",
-      "contract_address": "0395e78580157893cde88165d1340e0b9992c31417"
+      "contract_address": "039ed9214602f2a93eb05411f852fa78a476607634"
     }
   },
 
@@ -83,14 +83,16 @@
     "Demonstrated Cardano-to-PBC cross-chain coordination via off-chain relay",
     "Deployed a ZK MPC contract on PBC testnet with verifiable on-chain state",
     "Submitted 5 real ZK secret-input transactions via @partisiablockchain/zk-client TypeScript SDK",
+    "Successfully triggered ZK MPC computation across 4 nodes — on-chain result: 5 (all submitted users over age 18)",
     "Proved that secret user data never appears in any on-chain state, log, or output",
     "Built binary state decoder that reads ProfilaMpcState directly from PBC REST API",
     "Created comprehensive evidence trail with real TX hashes on both chains"
   ],
 
   "technical_notes": {
-    "pbc_cli_limitation": "The cargo pbc transaction CLI returns HTTP 400 for all transaction types on PBC testnet (verified with official example contracts). Contract deployment uses the PBC testnet browser. Secret input submission uses the PBC TypeScript SDK.",
-    "pbc_typescript_sdk": "Secret inputs submitted programmatically via @partisiablockchain/zk-client (RealZkClient.buildOnChainInputTransaction) + @partisiablockchain/blockchain-api-transaction-client (BlockchainTransactionClient.signAndSend). Each transaction encrypts the secret for all 4 MPC engines.",
+    "pbc_cli_limitation": "The cargo pbc transaction CLI returns HTTP 400 for all transaction types on PBC testnet. Contract deployment uses the PBC testnet browser. Secret input submission and computation trigger use the PBC TypeScript SDK.",
+    "pbc_typescript_sdk": "Secret inputs submitted via @partisiablockchain/zk-client (RealZkClient.buildOnChainInputTransaction) + @partisiablockchain/blockchain-api-transaction-client (BlockchainTransactionClient.signAndSend). Computation trigger uses SDK with corrected RPC encoding (0x09 prefix byte for action invocations). Each secret transaction encrypts the value for all 4 MPC engines.",
+    "zk_gas_requirement": "ZK MPC computation across 4 nodes requires ~100M gas. The computation trigger transaction must include sufficient gas fee; excess goes to the contract's balance.",
     "pbc_sdk_version": "v.16.126.0 (binder 11.9.0) — upgraded from v15.1.0 for testnet binder compatibility",
     "pbc_rest_api": "Contract state accessible via GET /chain/contracts/{address} — the /blockchain/contracts/ endpoint returns 404",
     "binary_state_decoding": "ProfilaMpcState decoded by locating the administrator address anchor in the serializedContract base64 blob, then reading fields sequentially per PBC's ReadWriteState format",
@@ -111,8 +113,8 @@
       ]
     },
     "pbc_tests": {
-      "total": 9,
-      "passed": 9,
+      "total": 11,
+      "passed": 11,
       "test_names": [
         "test_init_contract_valid_query_types",
         "test_init_contract_rejects_invalid_query_types",
@@ -122,7 +124,9 @@
         "test_decode_zero_result",
         "test_decode_large_result",
         "test_decode_short_byte_slice",
-        "test_decode_empty_slice"
+        "test_decode_empty_slice",
+        "test_survey_sum_result_decoding",
+        "test_query_type_dispatch_logic"
       ]
     }
   },
@@ -142,7 +146,7 @@
   },
 
   "future_work": [
-    "Integrate PBC TypeScript SDK for programmatic computation trigger (start_computation action)",
+    "Optimize gas estimation for ZK MPC computation trigger (currently requires 100M gas)",
     "Add Cardano result callback (write MPC result back to Cardano UTxO)",
     "Production deployment with real Profila user data (with consent)",
     "Multi-query support (run age_threshold and survey_match in parallel)",

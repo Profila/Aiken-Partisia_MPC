@@ -65,6 +65,7 @@ interface PbcDeployInfo {
   readonly contract_address: string;
   readonly deployment_tx: string;
   readonly deployed_at: string;
+  readonly deployer: string;
   readonly gas_balance_at_deploy: number;
 }
 
@@ -150,7 +151,10 @@ function decodeProfilaMpcState(
 
   // Find the administrator address to anchor our decoding.
   // We know the deployer address from deploy-m3.json.
-  const adminHex = "003942bda1d9f23da4bcfeb0b230f7c261d0605712";
+  // Read deployer address from deploy-m3.json to avoid hardcoding
+  const deployInfo = loadPbcDeploy();
+  const adminHex =
+    deployInfo?.deployer ?? process.env.PBC_DEPLOYER_ADDRESS ?? "";
   const adminBytes = Buffer.from(adminHex, "hex");
   const adminOffset = buf.indexOf(adminBytes);
 
@@ -170,7 +174,9 @@ function decodeProfilaMpcState(
   const datasetIdLen = buf.readUInt32LE(cursor);
   cursor += 4;
   if (cursor + datasetIdLen > buf.length || datasetIdLen > 256) return null;
-  const dataset_id = buf.subarray(cursor, cursor + datasetIdLen).toString("utf-8");
+  const dataset_id = buf
+    .subarray(cursor, cursor + datasetIdLen)
+    .toString("utf-8");
   cursor += datasetIdLen;
 
   // 3. query_type: String (LE u32 length + UTF-8)
@@ -178,7 +184,9 @@ function decodeProfilaMpcState(
   const queryTypeLen = buf.readUInt32LE(cursor);
   cursor += 4;
   if (cursor + queryTypeLen > buf.length || queryTypeLen > 256) return null;
-  const query_type = buf.subarray(cursor, cursor + queryTypeLen).toString("utf-8");
+  const query_type = buf
+    .subarray(cursor, cursor + queryTypeLen)
+    .toString("utf-8");
   cursor += queryTypeLen;
 
   // 4. min_participants: u32
@@ -300,11 +308,15 @@ function displayContractState(
   console.log(`\n  ┌${line}┐`);
   console.log(`  │${pad("  📡 LIVE PBC CONTRACT STATE")}│`);
   console.log(`  ├${line}┤`);
-  console.log(`  │${pad(`  Admin:       ${shortAddr(onChain.administrator)}`)}│`);
+  console.log(
+    `  │${pad(`  Admin:       ${shortAddr(onChain.administrator)}`)}│`,
+  );
   console.log(`  │${pad(`  Dataset:     ${onChain.dataset_id}`)}│`);
   console.log(`  │${pad(`  Query Type:  ${onChain.query_type}`)}│`);
   console.log(`  │${pad(`  Min Particp: ${onChain.min_participants}`)}│`);
-  console.log(`  │${pad(`  Result:      ${onChain.result ?? "None (pending)"}`)}│`);
+  console.log(
+    `  │${pad(`  Result:      ${onChain.result ?? "None (pending)"}`)}│`,
+  );
   console.log(`  │${pad(`  Complete:    ${onChain.computation_complete}`)}│`);
   console.log(`  │${pad(`  Gas:         ${gas}`)}│`);
   console.log(`  │${pad(`  Shard:       ${shard}`)}│`);
@@ -349,7 +361,10 @@ function displayResult(result: MpcResult): void {
 // HTML generation
 // ---------------------------------------------------------------------------
 
-function generateHtml(result: MpcResult, onChain: ProfilaMpcState | null): string {
+function generateHtml(
+  result: MpcResult,
+  onChain: ProfilaMpcState | null,
+): string {
   const stateRows = onChain
     ? `
       <div class="row">
@@ -497,10 +512,14 @@ function generateHtml(result: MpcResult, onChain: ProfilaMpcState | null): strin
       </div>
     </div>
 
-    ${onChain ? `
+    ${
+      onChain
+        ? `
     <div class="section-title">Live On-Chain State <span class="badge badge-live">LIVE</span></div>
     <div class="body">${stateRows}</div>
-    ` : ""}
+    `
+        : ""
+    }
 
     <div class="section-title">Cross-Chain Evidence</div>
     <div class="links">

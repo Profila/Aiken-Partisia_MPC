@@ -43,13 +43,21 @@ const PBC_API_BASE =
   process.env.PBC_TESTNET_URL ?? "https://node1.testnet.partisiablockchain.com";
 const PBC_CONTRACT_ADDRESS = process.env.PBC_CONTRACT_ADDRESS ?? "";
 const PBC_ACCOUNT_PRIVATE_KEY = process.env.PBC_ACCOUNT_PRIVATE_KEY ?? "";
-const TRIGGER_LOG_PATH = path.resolve(__dirname, "trigger-computation-log.json");
+const TRIGGER_LOG_PATH = path.resolve(
+  __dirname,
+  "trigger-computation-log.json",
+);
 
 /** Shortname for the start_computation action in the contract ABI. */
 const START_COMPUTATION_SHORTNAME = 0x01;
 
-/** Gas to allocate for the computation trigger transaction. */
-const TRIGGER_GAS = 50_000;
+/**
+ * Gas to allocate for the computation trigger transaction.
+ * ZK MPC computations require ~100M gas since the computation runs
+ * across 4 MPC nodes performing secret sharing. Excess gas goes to
+ * the contract's balance and is available for future operations.
+ */
+const TRIGGER_GAS = 100_000_000;
 
 // ---------------------------------------------------------------------------
 // Types
@@ -114,7 +122,11 @@ function logTriggerAttempt(entry: TriggerLogEntry): void {
     : [];
 
   const updatedLog = [...existingLog, entry];
-  fs.writeFileSync(TRIGGER_LOG_PATH, JSON.stringify(updatedLog, null, 2), "utf-8");
+  fs.writeFileSync(
+    TRIGGER_LOG_PATH,
+    JSON.stringify(updatedLog, null, 2),
+    "utf-8",
+  );
 }
 
 // ---------------------------------------------------------------------------
@@ -179,11 +191,16 @@ async function main(): Promise<void> {
 
     console.log("\n🚀 Sending start_computation transaction...\n");
 
-    // Build the RPC payload: just the action shortname byte (no arguments)
-    const rpc = Buffer.from([START_COMPUTATION_SHORTNAME]);
+    // Build the RPC payload with PBC's action invocation format.
+    // PBC expects: [0x09, shortname] where 0x09 is the RPC prefix for
+    // action calls. Without this prefix, the runtime fails with
+    // "Unable to read int" when trying to parse the shortname.
+    const rpc = Buffer.from([0x09, START_COMPUTATION_SHORTNAME]);
 
     // Create authenticated transaction client
-    const auth = SenderAuthenticationKeyPair.fromString(PBC_ACCOUNT_PRIVATE_KEY);
+    const auth = SenderAuthenticationKeyPair.fromString(
+      PBC_ACCOUNT_PRIVATE_KEY,
+    );
     const txClient = BlockchainTransactionClient.create(PBC_API_BASE, auth);
 
     // Build the transaction: { address, rpc } per PBC SDK Transaction interface
@@ -211,7 +228,8 @@ async function main(): Promise<void> {
 
     logEntry.status = "triggered";
     logEntry.tx_id = executed.identifier;
-    logEntry.note = "Computation triggered successfully via PBC TypeScript SDK.";
+    logEntry.note =
+      "Computation triggered successfully via PBC TypeScript SDK.";
 
     console.log(`  ✅ Computation triggered!`);
     console.log(`  📝 TX: ${executed.identifier}`);
