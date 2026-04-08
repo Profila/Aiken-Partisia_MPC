@@ -27,7 +27,7 @@ Aiken validator with `MpcRequest` datum and `InitiateMPC` redeemer: [`cardano/va
 
 ### 3. Documentation provided in PDF format in English
 
-Full milestone report: [`docs/evidence/milestone-1-report.md`](https://github.com/Profila/Aiken-Partisia_MPC/blob/main/docs/evidence/milestone-1-report.md)
+Full milestone report (PDF): [`docs/evidence/milestone-1-report.pdf`](https://github.com/Profila/Aiken-Partisia_MPC/blob/main/docs/evidence/milestone-1-report.pdf)
 
 ### 4. Documentation includes Aiken test script results and smart contract definitions
 
@@ -52,7 +52,7 @@ Script address: [`addr_test1wzut662xhd8e4jq97fpdsml2pyqerejwzfg24red2n7gceczhkwa
 
 | Evidence | Link |
 |----------|------|
-| Documentation (GitHub) | [milestone-1-report.md](https://github.com/Profila/Aiken-Partisia_MPC/blob/main/docs/evidence/milestone-1-report.md) |
+| Documentation (PDF) | [milestone-1-report.pdf](https://github.com/Profila/Aiken-Partisia_MPC/blob/main/docs/evidence/milestone-1-report.pdf) |
 | Video (YouTube) | [M1 Demo](https://youtu.be/QRj4tAt23Aw) |
 | Stakeholder sign-off (Profila & Partisia) | [Profila & Partisia Sign-off (PDF)](https://github.com/Profila/Aiken-Partisia_MPC/blob/main/docs/Profila%20%26%20Partisia%20Sign-off.pdf) |
 | Repository | [github.com/Profila/Aiken-Partisia_MPC](https://github.com/Profila/Aiken-Partisia_MPC) |
