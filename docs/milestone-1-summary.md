@@ -54,5 +54,5 @@ Script address: [`addr_test1wzut662xhd8e4jq97fpdsml2pyqerejwzfg24red2n7gceczhkwa
 |----------|------|
 | Documentation (GitHub) | [milestone-1-report.md](https://github.com/Profila/Aiken-Partisia_MPC/blob/main/docs/evidence/milestone-1-report.md) |
 | Video (YouTube) | [M1 Demo](https://youtu.be/QRj4tAt23Aw) |
-| Stakeholder sign-off | [Closeout report approved in repo](https://github.com/Profila/Aiken-Partisia_MPC/blob/main/docs/evidence/closeout-report.json) |
+| Stakeholder sign-off (Profila & Partisia) | [Profila & Partisia Sign-off (PDF)](https://github.com/Profila/Aiken-Partisia_MPC/blob/main/docs/Profila%20%26%20Partisia%20Sign-off.pdf) |
 | Repository | [github.com/Profila/Aiken-Partisia_MPC](https://github.com/Profila/Aiken-Partisia_MPC) |
