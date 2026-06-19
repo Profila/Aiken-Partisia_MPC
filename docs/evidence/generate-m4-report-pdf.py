@@ -145,7 +145,8 @@ pdf.link_line("Link:", f"{REPO}/blob/main/docs/evidence/closeout-report.pdf")
 
 # 7
 pdf.sub_title("7. Final closeout video is publicly available")
-pdf.link_line("Link:", "https://youtu.be/jwwfdTSUS2w")
+pdf.link_line("Catalyst Project Closeout Video (PCV):", "https://youtu.be/YFOK4pq9jIk")
+pdf.link_line("Combined M1-M4 technical demo:", "https://youtu.be/jwwfdTSUS2w")
 
 pdf.hr()
 
@@ -166,7 +167,7 @@ pdf.link_line(
     "Final closeout report:",
     f"{REPO}/blob/main/docs/evidence/closeout-report.pdf",
 )
-pdf.link_line("Final closeout video:", "https://youtu.be/jwwfdTSUS2w")
+pdf.link_line("Final closeout video (Catalyst PCV):", "https://youtu.be/YFOK4pq9jIk")
 
 pdf.hr()
 pdf.set_font("Helvetica", "I", 10)

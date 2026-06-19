@@ -216,6 +216,7 @@ pdf.hr()
 # Videos
 pdf.section_title("7. Videos")
 video_labels = {
+    "pcv_final_closeout": "Final Closeout Video (Catalyst PCV)",
     "m1_aiken_contract": "M1 - Aiken Contract",
     "m2_pbc_contract_relay": "M2 - PBC Contract + Relay",
     "m3_secret_inputs": "M3 - Secret Inputs",
